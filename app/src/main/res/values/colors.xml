@@ -2,5 +2,12 @@
 <resources>
     <color name="colorPrimary">#00DAEE</color>
     <color name="colorPrimaryDark">#004C53</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#1638F4</color>
+
+
+    <color name="login">#1a1c20</color>
+    <color name="logintxt">#f0a500</color>
+    <color name = "colorPrimary2">#f4f4f4 </color>
+
+
 </resources>

@@ -11,4 +11,18 @@
     <string name="sort_by_priority">Sort by priority</string>
     <string name="sort_alphabetically">Sort alphabetically</string>
     <string name="search">Search</string>
+
+    <!-- Log in -->
+    <string name="forget_password"> Forget Password? </string>
+    <string name="login"> Log in </string>
+    <string name="email"> Email </string>
+    <string name="password"> Password </string>
+    <string name="do_not_have"> Don\'t have an account? </string>
+    <string name="create_account"> Sign Up </string>
+
+    <!-- SignUp -->
+    <string name="first_name"> First Name </string>
+    <string name="last_name"> Last Name </string>
+    <string name="signup"> Sign Up </string>
+
 </resources>
