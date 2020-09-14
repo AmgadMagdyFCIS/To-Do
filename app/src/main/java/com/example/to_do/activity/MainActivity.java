@@ -17,7 +17,6 @@ import com.example.to_do.fragments.MainFragment;
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    Button navigateToListFragment;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -34,19 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentTransaction.add(R.id.container, new MainFragment());
         fragmentTransaction.commit();
-
-        navigateToListFragment=findViewById(R.id.button);
-        navigateToListFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                    fragmentManager = getSupportFragmentManager();
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container, ListFragment.newInstance());
-                    fragmentTransaction.commit();
-
-            }
-        });
 
     }
 
