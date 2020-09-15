@@ -24,9 +24,13 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
                 + Constants.UserTable.FIRST_NAME + " text not null, " + Constants.UserTable.LAST_NAME + " text not null, "
                 + Constants.UserTable.EMAIL + " text not null, " + Constants.UserTable.PASSWORD + " text not null " + ")");
 
-        sqLiteDatabase.execSQL("create table To_do_List (name_of_list String primary Key," + " NumberOfTasks Integer ,Description String)");
-        sqLiteDatabase.execSQL("create table To_do_Task(name_of_task String primary key," + "name_of_list String ,Date String ,Time String ," +
-                "Priority Integer,Description String, Reminder String , Integer Done)");
+        sqLiteDatabase.execSQL("create table To_do_List (name_of_list String primary Key," +
+                " NumberOfTasks Integer ,Description String)");
+
+        sqLiteDatabase.execSQL("create table To_do_Task(name_of_task String primary key," +
+                "name_of_list String ,Date String ,Time String ,"
+                + "Priority Integer,Description String, Reminder String , Integer Done)");
+
     }
 
     @Override
