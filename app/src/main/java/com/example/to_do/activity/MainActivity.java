@@ -14,7 +14,7 @@ import com.example.to_do.R;
 import com.example.to_do.fragments.ListFragment;
 import com.example.to_do.fragments.MainFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     Toolbar toolbar;
     FragmentManager fragmentManager;
