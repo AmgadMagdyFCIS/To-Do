@@ -35,7 +35,6 @@
             layout="@layout/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="10"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -48,6 +47,8 @@
         android:id="@+id/nav_view"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
+
+
 
     <!--Write here Navigation View
         and include navigation header and list_fragment_menu that will appear in the navigation drawer
