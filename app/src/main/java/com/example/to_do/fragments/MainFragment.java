@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
 import com.example.to_do.Recyclers.ListItem;
 import com.example.to_do.Recyclers.RecyclerViewAdapter;
@@ -27,6 +28,7 @@ public class MainFragment extends Fragment {
     RecyclerView recyclerView;
     private List<ListItem> recyclerViewItems;
     private RecyclerViewAdapter recyclerViewAdapter;
+    private ToDoDBHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +38,7 @@ public class MainFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.lists);
 
+        dbHelper=new ToDoDBHelper(getActivity());
 
 
 
