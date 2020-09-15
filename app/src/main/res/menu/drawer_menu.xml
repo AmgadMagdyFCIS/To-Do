@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/add_category"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="Add Category">
+    </item>
+
+        <item android:id="@+id/about_us"
+            android:icon="@drawable/ic_baseline_add_24"
+            android:title="About us">
+        </item>
+
+        <item android:id="@+id/log_out"
+            android:icon="@drawable/ic_baseline_add_24"
+            android:title="Sign out">
+        </item>
+
+</menu>
