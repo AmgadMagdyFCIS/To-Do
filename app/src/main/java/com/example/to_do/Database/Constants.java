@@ -8,14 +8,13 @@ public class Constants {
 
     public static class TaskTable {
         public static final String TABLE_NAME = "Tasks";
-        public static final String ID = "id";
-        public static final String NAME = "name";
+        public static final String TASKNAME = "taskname";
+        public static final String LISTNAME = "listname";
         public static final String PRIORITY = "priority";
         public static final String DESCRIPTION = "description";
         public static final String DATE = "date";
         public static final String TIME = "time";
-        public static final String TAG = "tag"; // tag == list name
-        public static final String REPEATED = "repeated";
+        public static final String DONE = "done";
         public static final String REMAINDER = "remainder";
 
     }
@@ -31,10 +30,9 @@ public class Constants {
 
     public static class ListTable {
         public static final String TABLE_NAME = "Lists";
-        public static final String ID = "id";
         public static final String NAME = "name";
-        public static final String IMAGE = "description";
         public static final String NUMBER_OF_TASKS = "number_of_tasks";
+        public static final String DESCRIPTION = "description";
     }
 
 
