@@ -12,10 +12,10 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase sqLiteDatabase;
     private SQLiteDatabase toDoDatabase;
-
     public ToDoDBHelper(Context context) {
         super(context, Constants.DATABASE_NAME, null, 1);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

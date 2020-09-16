@@ -1,5 +1,6 @@
 package com.example.to_do.fragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -36,13 +37,20 @@ public class MainFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        recyclerViewItems = new ArrayList<>();
+
         recyclerView = view.findViewById(R.id.lists);
 
-        dbHelper=new ToDoDBHelper(getActivity());
+        dbHelper= new ToDoDBHelper(getActivity());
 
+        Cursor cur =dbHelper.fetchAllLists();
 
+        while (!cur.isAfterLast()) {
+            recyclerViewItems.add(new ListItem(cur.getString(0), cur.getInt(1), cur.getString(2)));
+            cur.moveToNext();
+        }
 
-        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setTasks());
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), recyclerViewItems);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -51,6 +59,8 @@ public class MainFragment extends Fragment {
 
         return view;
     }
+
+
 
     private List<ListItem> setTasks(){
         List<ListItem> list = new ArrayList<>();

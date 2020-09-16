@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+
+
     public void navigate(Object fragment) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -74,9 +77,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        drawer.closeDrawer(GravityCompat.START);
         switch (item.getItemId()) {
             case R.id.add_category:
-
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.container, new AddListFragment());
+                fragmentTransaction.commit();
                 isFragmentOpen = true;
             break;
 
