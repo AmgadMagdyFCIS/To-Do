@@ -84,7 +84,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     public Cursor fetchAllLists() {
         toDoDatabase = getReadableDatabase();
         String[] rowDetails = {"name_of_list", "NumberOfTasks", "Description"};
-        Cursor cursor = toDoDatabase.query("To_do_Task", rowDetails, null, null, null, null, null);
+        Cursor cursor = toDoDatabase.query("To_do_List", rowDetails, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }

@@ -51,11 +51,11 @@ public class AddListFragment extends Fragment {
         addNewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListClass l = new ListClass(name.toString(),0,description.toString());
+                ListClass l = new ListClass(name.getText().toString(),0,description.getText().toString());
                 toDoDBHelper.create_list(l);
                 Intent Main = new Intent(getActivity(), MainActivity.class);
                 startActivity(Main);
-                Toast.makeText(getContext(),"A New To-Do List",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext()," Added "+name.getText().toString(),Toast.LENGTH_SHORT).show();
             }
         });
 
