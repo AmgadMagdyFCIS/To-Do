@@ -10,4 +10,8 @@ public class ListClass {
         NumberOfTasks = numberOfTasks;
         Description = description;
     }
+
+    public ListClass(String name_of_list) {
+        this.name_of_list = name_of_list;
+    }
 }

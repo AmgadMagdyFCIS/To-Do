@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ToDoDBHelper extends SQLiteOpenHelper {
 
@@ -29,7 +30,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("create table To_do_Task(name_of_task String primary key," +
                 "name_of_list String ,Date String ,Time String ,"
-                + "Priority Integer,Description String, Reminder String , Integer Done)");
+                + "Priority String,Description String, Reminder String , Integer Done)");
 
     }
 
@@ -44,27 +45,52 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
 
 
-    public void create_Task(TaskClass tc) {
+    public void create_Task(Task tc) {
         ContentValues row = new ContentValues();
-        Cursor cur = Fetchlist(tc.name_of_list) ;
-        row.put("name_of_task", tc.name_of_task);
-        row.put("name_of_list", tc.name_of_list);
-        increase(tc.name_of_list) ;
-        row.put("Date", tc.Date);
-        row.put("Time", tc.Time);
-        row.put("Priority", tc.Priority);
-        row.put("Description", tc.Description);
-        row.put("Reminder", tc.Reminder);
-        row.put("Done", tc.Done);
+        Cursor cur = Fetchlist(tc.getName_of_list()) ;
+        row.put("name_of_task", tc.getName_of_task());
+        row.put("name_of_list", tc.getName_of_list());
+        increase(tc.getName_of_list()) ;
+        row.put("Date", tc.getDate());
+        row.put("Time", tc.getTime());
+        row.put("Priority", tc.getPriority());
+        row.put("Description", tc.getDescription());
+        row.put("Reminder", tc.getReminder());
+        row.put("Done", tc.getDone());
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_Task", null, row);
         toDoDatabase.close();
     }
+
+    public void create_Task_with_Name_only(Task tc) {
+        ContentValues row = new ContentValues();
+        Cursor cur = Fetchlist(tc.getName_of_list()) ;
+        row.put("name_of_task", tc.getName_of_task());
+        row.put("name_of_list", tc.getName_of_list());
+        row.put("Priority" , tc.getPriority());
+        row.put("Ramainder" , tc.getReminder());
+        increase(tc.getName_of_list()) ;
+
+        toDoDatabase = getWritableDatabase();
+        toDoDatabase.insert("To_do_Task", null, row);
+        toDoDatabase.close();
+    }
+
+
     public void create_list(ListClass lc) {
         ContentValues row = new ContentValues();
         row.put("name_of_list", lc.name_of_list);
         row.put("NumberOfTasks", 0);
         row.put("Description", lc.Description);
+        toDoDatabase = getWritableDatabase();
+        toDoDatabase.insert("To_do_List", null, row);
+        toDoDatabase.close();
+    }
+
+    public void create_list_with_name_only(ListClass lc) {
+        ContentValues row = new ContentValues();
+        row.put("name_of_list", lc.name_of_list);
+
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_List", null, row);
         toDoDatabase.close();
@@ -90,6 +116,26 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         }
         toDoDatabase.close();
         return cursor;
+    }
+
+    public List<String> getAllLists(){
+        List<String> list = new ArrayList<String>();
+
+        String selectQuery = "SELECT  * FROM " + "To_do_List";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return list;
     }
 
     public void UpdateTask(String Newname_of_task, String OldName, String Newname_of_list, String NewDate, String NewTime, Integer NewPriority, String NewDescription, String NewReminder, Integer NewDone) {
@@ -132,8 +178,8 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         toDoDatabase.close();
     }
 
-    public ArrayList<TaskClass> ReturnTasksOfSpecificeList(String NameList, Integer done) {
-        ArrayList<TaskClass> List = new ArrayList<>();
+    public ArrayList<Task> ReturnTasksOfSpecificeList(String NameList, Integer done) {
+        ArrayList<Task> List = new ArrayList<>();
         toDoDatabase = getReadableDatabase();
 
         String[] arg = {NameList};
@@ -141,7 +187,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         Cursor curs = fetchAllTasks();
         while (!curs.isAfterLast()) {
             if (curs.getString(1).equalsIgnoreCase(NameList) && curs.getInt(7) == done) {
-                List.add(new TaskClass(curs.getString(0),curs.getString(1),curs.getString(2),curs.getString(3),curs.getInt(4),curs.getString(5),curs.getString(6) ,curs.getInt(7)));
+                List.add(new Task(curs.getString(0),curs.getString(1),curs.getString(2),curs.getString(3),curs.getString(4),curs.getString(5),curs.getString(6) ,curs.getInt(7)));
             }
             curs.moveToNext();
         }

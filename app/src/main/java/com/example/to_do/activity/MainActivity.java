@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.to_do.R;
 import com.example.to_do.fragments.AddListFragment;
+import com.example.to_do.fragments.AddTaskFragment;
 import com.example.to_do.fragments.ListFragment;
 import com.example.to_do.fragments.MainFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.container, new MainFragment());
+        fragmentTransaction.add(R.id.container, new AddTaskFragment());
         fragmentTransaction.commit();
 
     }

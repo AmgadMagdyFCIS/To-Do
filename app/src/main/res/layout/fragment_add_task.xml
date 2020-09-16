@@ -1,14 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:padding="10dp"
     tools:context=".fragments.AddTaskFragment">
 
     <!-- Ramadan -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        <TextView
+            android:id="@+id/task_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="@string/what_do_you_want_to_do" />
 
-</FrameLayout>
+        <EditText
+            android:id="@+id/task_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/enter_the_task_here"
+            android:inputType="text" />
+
+
+
+
+        <TextView
+            android:id="@+id/task_date_time_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="@string/when" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/task_date_edit_text"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+                android:hint="@string/date"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/task_time_edit_text"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:ems="7"
+                android:layout_weight="1"
+                android:focusableInTouchMode="false"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="right"
+                android:hint="@string/time"
+                android:inputType="time" />
+        </LinearLayout>
+
+
+
+
+
+        <TextView
+            android:id="@+id/task_description_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="@string/how" />
+
+        <EditText
+            android:id="@+id/task_description_edit_text"
+            android:ems="10"
+            android:hint="@string/description"
+            android:inputType="textImeMultiLine"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"/>
+
+
+
+        <TextView
+            android:id="@+id/task_priority_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="@string/priority" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            >
+            <RadioGroup
+                android:id="@+id/task_priorities_radio_group"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="0px"
+                    android:id="@+id/task_priority_A"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/a">
+                </RadioButton>
+
+                <RadioButton
+                    android:layout_width="0px"
+                    android:id="@+id/task_priority_B"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:text="@string/b">
+                </RadioButton>
+
+                <RadioButton
+                    android:layout_width="0px"
+                    android:id="@+id/task_priority_C"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:text="@string/c">
+                </RadioButton>
+
+                <RadioButton
+                    android:layout_width="0px"
+                    android:id="@+id/task_priority_D"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:text="@string/d">
+                </RadioButton>
+            </RadioGroup>
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/task_tag_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="@string/tag" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            >
+
+            <Spinner
+                android:id="@+id/task_tags_spinner"
+                android:layout_width="0px"
+                android:layout_weight="4"
+                android:layout_gravity="left"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/task_tags_add_button"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="right"
+                android:src="@drawable/add" />
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/task_repeated_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="@string/remainder" />
+
+        <Spinner
+            android:id="@+id/task_repetead_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginBottom="5dp"
+            android:entries="@array/remainderDuration"/>
+
+    <Button
+        android:id="@+id/add_task_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:textAllCaps="false"
+        />
+
+
+</LinearLayout>
