@@ -178,7 +178,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         toDoDatabase.close();
     }
 
-    public ArrayList<TaskItem> ReturnTasksOfSpecificeList(String NameList, Integer done) {
+    public ArrayList<TaskItem> ReturnTasksOfSpecificList(String NameList, int done) {
         ArrayList<TaskItem> List = new ArrayList<>();
         toDoDatabase = getReadableDatabase();
 
@@ -187,7 +187,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         Cursor curs = fetchAllTasks();
         while (!curs.isAfterLast()) {
             if (curs.getString(1).equalsIgnoreCase(NameList) && curs.getInt(7) == done) {
-                List.add(new TaskItem(curs.getString(0),curs.getString(1),curs.getString(2),curs.getString(3),curs.getString(4),curs.getString(5),curs.getString(6) ,curs.getInt(7)));
+                List.add(new TaskItem(curs.getString(0),curs.getString(1),curs.getString(2),curs.getString(3),curs.getString(4),curs.getString(5),curs.getString(6)));
             }
             curs.moveToNext();
         }

@@ -68,6 +68,7 @@ public class DoneFragment extends Fragment {
 
         //db
         dbHelper= new ToDoDBHelper(getActivity());
+        recyclerViewItems=dbHelper.ReturnTasksOfSpecificList(list,1);
 
 
 

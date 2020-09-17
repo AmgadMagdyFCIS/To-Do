@@ -50,7 +50,7 @@ public class TasksFragment extends Fragment {
 
         if (getArguments() != null) {
             list = getArguments().getString(listName);
-            ;
+
         }
     }
 
@@ -66,6 +66,7 @@ public class TasksFragment extends Fragment {
 
         //db
         dbHelper= new ToDoDBHelper(getActivity());
+        recyclerViewItems=dbHelper.ReturnTasksOfSpecificList(list,0);
 
 
 

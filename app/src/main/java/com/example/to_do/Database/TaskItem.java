@@ -3,9 +3,9 @@ package com.example.to_do.Database;
 public class TaskItem {
     private  String name,listName,date,time,priority,description,reminder;
 
-    private  int done;
+    private  int done=0;
 
-    public TaskItem(String name, String listName, String date, String time, String priority, String description, String reminder, int done) {
+    public TaskItem(String name, String listName, String date, String time, String priority, String description, String reminder) {
         this.name = name;
         this.listName = listName;
         this.date = date;
@@ -13,7 +13,7 @@ public class TaskItem {
         this.priority = priority;
         this.description = description;
         this.reminder = reminder;
-        this.done = done;
+
     }
 
     public TaskItem(String name, String listName) {

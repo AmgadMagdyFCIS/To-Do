@@ -12,12 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.to_do.Database.TaskItem;
+import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
-import com.example.to_do.Recyclers.RecyclerViewAdapter;
 import com.example.to_do.activity.MainActivity;
 import com.example.to_do.viewpager.ViewPagerAdapter;
 import com.example.to_do.viewpager.ViewPagerItem;
@@ -34,10 +33,13 @@ public class ListFragment extends Fragment {
     TabLayout tabs;
     FloatingActionButton fab;
     Toolbar toolbar;
+    private List<TaskItem> doneList;
+    private List<TaskItem> taskslist;
+    private ToDoDBHelper dbHelper;
 
     private static String listName ;
     private String list;
-    private RecyclerViewAdapter recyclerViewAdapter;
+
 
     public ListFragment() {
         // Required empty public constructor
@@ -82,6 +84,13 @@ public class ListFragment extends Fragment {
         //tab layout
         tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+
+        taskslist=new ArrayList<>();
+        doneList=new ArrayList<>();
+        dbHelper= new ToDoDBHelper(getActivity());
+        taskslist=dbHelper.ReturnTasksOfSpecificList(list,0);
+        doneList=dbHelper.ReturnTasksOfSpecificList(list,1);
 
 
 
@@ -148,8 +157,8 @@ public class ListFragment extends Fragment {
 
     private List<ViewPagerItem> getViewPagerItems() {
         List<ViewPagerItem> viewPagerItems = new ArrayList<>();
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks), new TasksFragment()));
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.done), new DoneFragment()));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks)+"\n"+taskslist.size(), TasksFragment.newInstance(list)));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.done)+"\n"+doneList.size(), DoneFragment.newInstance(list)));
         return viewPagerItems;
     }
 
