@@ -50,6 +50,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         row.put("name_of_task", tc.getName());
         row.put("name_of_list", tc.getListName());
        increase(tc.getListName()) ;
+       decrease(tc.getListName());
         row.put("Date", tc.getDate());
         row.put("Time", tc.getTime());
         row.put("Priority", tc.getPriority());
@@ -71,7 +72,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         row.put("Description", tc.getDescription());
         row.put("Reminder", tc.getReminder());
         row.put("Done", 0);
-    //      increase(tc.getListName()) ;
+        increase(tc.getListName()) ;
 
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_Task", null, row);
