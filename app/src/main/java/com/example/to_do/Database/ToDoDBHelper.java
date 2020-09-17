@@ -64,12 +64,12 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     public void create_Task_with_Name_only(TaskItem tc) {
         ContentValues row = new ContentValues();
-        Cursor cur = Fetchlist(tc.getListName()) ;
+       // Cursor cur = Fetchlist(tc.getListName()) ;
         row.put("name_of_task", tc.getName());
         row.put("name_of_list", tc.getListName());
         row.put("Priority" , tc.getPriority());
-        row.put("Ramainder" , tc.getReminder());
-        increase(tc.getListName()) ;
+        row.put("Reminder" , tc.getReminder());
+      //  increase(tc.getListName()) ;
 
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_Task", null, row);
@@ -202,7 +202,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         //cur.getInt()
         toDoDatabase =getReadableDatabase();
         String [] arg={name} ;
-        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_List where name like ?",arg) ;
+        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_List where name_of_list like ?",arg) ;
         toDoDatabase.close();
         return  cur ;
     }
