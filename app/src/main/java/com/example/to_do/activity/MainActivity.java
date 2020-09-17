@@ -22,6 +22,8 @@ import com.example.to_do.fragments.AddListFragment;
 import com.example.to_do.fragments.AddTaskFragment;
 import com.example.to_do.fragments.ListFragment;
 import com.example.to_do.fragments.MainFragment;
+import com.example.to_do.fragments.SearchFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,12 +34,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentTransaction fragmentTransaction;
     boolean isFragmentOpen = false;
     ActionBarDrawerToggle toggle;
+    Button search;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        search = findViewById(R.id.search);
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -53,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.add(R.id.container, new MainFragment());
         fragmentTransaction.commit();
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            navigate(new SearchFragment());
+            }
+        });
     }
 
     @Override
@@ -86,13 +96,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.closeDrawer(GravityCompat.START);
         switch (item.getItemId()) {
+
+            case R.id.home:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.container, new MainFragment());
+                fragmentTransaction.commit();
+                isFragmentOpen = true;
+                break;
+
             case R.id.add_category:
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.container, new AddTaskFragment());
+                fragmentTransaction.add(R.id.container, new AddListFragment());
                 fragmentTransaction.commit();
                 isFragmentOpen = true;
-            break;
+                break;
 
             case R.id.about_us:
 
