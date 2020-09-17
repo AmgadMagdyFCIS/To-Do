@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     boolean isFragmentOpen = false;
-    ActionBarDrawerToggle toggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,28 +40,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(true);
+
         toggle.syncState();
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
         fragmentTransaction.add(R.id.container, new MainFragment());
         fragmentTransaction.commit();
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
+
 
     public void navigate(Object fragment) {
         fragmentManager = getSupportFragmentManager();
@@ -89,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.add_category:
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.container, new AddTaskFragment());
+                fragmentTransaction.add(R.id.container, new AddListFragment());
                 fragmentTransaction.commit();
                 isFragmentOpen = true;
             break;
