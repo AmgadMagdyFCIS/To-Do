@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.add_category:
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.container, new AddTaskFragment());
+                fragmentTransaction.add(R.id.container, new AddListFragment());
                 fragmentTransaction.commit();
                 isFragmentOpen = true;
             break;

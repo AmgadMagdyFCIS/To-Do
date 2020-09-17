@@ -152,6 +152,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         date = view.findViewById(R.id.task_date_edit_text);
         time = view.findViewById(R.id.task_time_edit_text);
         name = view.findViewById(R.id.task_name_edit_text);
+        description= view.findViewById(R.id.task_description_edit_text);
 
         addTaskButton = view.findViewById(R.id.add_task_button);
         addListButton = view.findViewById(R.id.task_tags_add_button);
@@ -222,22 +223,23 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     private void AddTaskToDBBasedOnFilledFields()
     {
         checkEmptyFieldsWithToasts();
-        if(isThreeRequiredFieldsAreFilled())
+        if(isAllFieldsAreFilled())
+        {
+            newTaskItem.setName(name.getText().toString());
+            newTaskItem.setPriority(selectedPriority.getText().toString());
+            newTaskItem.setDate(date.getText().toString());
+            newTaskItem.setTime(time.getText().toString());
+            newTaskItem.setDescription(description.getText().toString());
+            newTaskItem.setListName(tags.getSelectedItem().toString());
+            newTaskItem.setReminder(duration.getSelectedItem().toString());
+            database.create_Task(newTaskItem);
+        }
+        else if(isThreeRequiredFieldsAreFilled())
         {
             newTaskItem.setName(name.getText().toString());
             newTaskItem.setPriority(selectedPriority.getText().toString());
 
             database.create_Task_with_Name_only(newTaskItem);
-        }
-        else if(isAllFieldsAreFilled())
-        {
-            newTaskItem.setName(name.getText().toString());
-            newTaskItem.setPriority(selectedPriority.getText().toString());
-            newTaskItem.setDate(date.getText().toString());
-            newTaskItem.setTime(date.getText().toString());
-            newTaskItem.setDescription(description.getText().toString());
-
-            database.create_Task(newTaskItem);
         }
     }
 
