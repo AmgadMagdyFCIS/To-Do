@@ -46,11 +46,9 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     public void create_Task(TaskItem tc) {
         ContentValues row = new ContentValues();
-     //  Cursor cur = Fetchlist(tc.getListName()) ;
         row.put("name_of_task", tc.getName());
         row.put("name_of_list", tc.getListName());
        increase(tc.getListName()) ;
-       decrease(tc.getListName());
         row.put("Date", tc.getDate());
         row.put("Time", tc.getTime());
         row.put("Priority", tc.getPriority());
@@ -63,7 +61,6 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     public void create_Task_with_Name_only(TaskItem tc) {
         ContentValues row = new ContentValues();
-     //    Cursor cur = Fetchlist(tc.getListName()) ;
         row.put("name_of_task", tc.getName());
         row.put("name_of_list", tc.getListName());
         row.put("Date", tc.getDate());
@@ -73,7 +70,6 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         row.put("Reminder", tc.getReminder());
         row.put("Done", 0);
         increase(tc.getListName()) ;
-
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_Task", null, row);
 
@@ -93,7 +89,8 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     public void create_list_with_name_only(ListItem lc) {
         ContentValues row = new ContentValues();
         row.put("name_of_list", lc.getName());
-
+        row.put("NumberOfTasks", 0);
+        row.put("Description", "");
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_List", null, row);
 
