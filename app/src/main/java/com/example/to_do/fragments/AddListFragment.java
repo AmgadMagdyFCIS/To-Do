@@ -1,29 +1,22 @@
 package com.example.to_do.fragments;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.to_do.Database.ListClass;
+import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
-import com.example.to_do.Recyclers.ListItem;
-import com.example.to_do.activity.Login;
 import com.example.to_do.activity.MainActivity;
 
 
@@ -51,7 +44,7 @@ public class AddListFragment extends Fragment {
         addNewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListClass l = new ListClass(name.getText().toString(),0,description.getText().toString());
+                ListItem l = new ListItem(name.getText().toString(),0,description.getText().toString());
                 toDoDBHelper.create_list(l);
                 Intent Main = new Intent(getActivity(), MainActivity.class);
                 startActivity(Main);
@@ -69,4 +62,6 @@ public class AddListFragment extends Fragment {
 
         return view;
     }
+
+
 }

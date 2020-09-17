@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.to_do.Database.ListItem;
+import com.example.to_do.Database.TaskItem;
 import com.example.to_do.R;
 
 import java.util.List;
@@ -17,49 +19,94 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
-    private List<ListItem> tasks;
+    private List<TaskItem> tasksList;
+    private List<ListItem> listsList;
+    private int type;
 
-    public RecyclerViewAdapter(Context context, List<ListItem> tasks) {
+    public RecyclerViewAdapter(Context context, int type,List<TaskItem> tasks ) {
         this.context = context;
-        this.tasks = tasks;
+        this.tasksList = tasks;
+        this.type=type;
     }
-
+    public RecyclerViewAdapter(Context context, List<ListItem> lists ,int type) {
+        this.context = context;
+        this.listsList = lists;
+        this.type=type;
+    }
 
     @NonNull
     @Override
     public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View view;
+        if(type==0) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        }
+        else
+            view =LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
-        ListItem recyclerViewItem = tasks.get(position);
-        holder.name.setText(recyclerViewItem.getName());
-        holder.numberOfTasks.setText(String.valueOf(recyclerViewItem.getNumberOfTasks()));
-        holder.description.setText(recyclerViewItem.getDescription());
+
+        if (type==0) {
+            ListItem recyclerViewListItem = listsList.get(position);
+            holder.listName.setText(recyclerViewListItem.getName());
+            holder.numberOfTasks.setText(String.valueOf(recyclerViewListItem.getNumberOfTasks()));
+            holder.description.setText(recyclerViewListItem.getDescription());
+        }
+        else
+        {
+            TaskItem recyclerViewTaskItem = tasksList.get(position);
+            holder.taskName.setText(recyclerViewTaskItem.getName());
+
+        }
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        if(type==0) {
+            return listsList.size();
+        }
+        else
+        {
+            return tasksList.size();
+        }
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,numberOfTasks,description;
+        TextView listName,numberOfTasks,description;
+
+        TextView taskName;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
-            numberOfTasks = itemView.findViewById(R.id.number_of_tasks);
-            description = itemView.findViewById(R.id.description);
+            if(type==0) {
+                listName = itemView.findViewById(R.id.name);
+                numberOfTasks = itemView.findViewById(R.id.number_of_tasks);
+                description = itemView.findViewById(R.id.description);
+
+            }
+            else
+            {
+                taskName=itemView.findViewById(R.id.taskName);
+
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(getAdapterPosition() != -1){
-                        ListItem task = tasks.get(getAdapterPosition());
-                        Toast.makeText(context,task.getName(),Toast.LENGTH_LONG).show();
+                    if (getAdapterPosition() != -1) {
+                        if(type==0) {
+                            ListItem list = listsList.get(getAdapterPosition());
+                            Toast.makeText(context, list.getName(), Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            TaskItem task = tasksList.get(getAdapterPosition());
+                            Toast.makeText(context, task.getName(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });

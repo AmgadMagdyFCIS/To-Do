@@ -23,8 +23,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.to_do.Database.ListClass;
-import com.example.to_do.Database.Task;
+import com.example.to_do.Database.ListItem;
+import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
 
@@ -48,7 +48,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     private DatePickerDialog datePicker;
     private TimePickerDialog timePicker;
 
-    private Task newTask;
+    private TaskItem newTaskItem;
 
 
     @Override
@@ -59,7 +59,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
 
         database = new ToDoDBHelper(getActivity());
-        newTask = new Task();
+        newTaskItem = new TaskItem();
         linkViewesToCode(view);
         loadSpinnerData();
 
@@ -125,12 +125,12 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         {
             case R.id.task_tags_spinner:
             {
-                newTask.setName_of_list(tags.getSelectedItem().toString());
+                newTaskItem.setListName(tags.getSelectedItem().toString());
                 break;
             }
             case R.id.task_repetead_spinner:
             {
-                newTask.setReminder(duration.getSelectedItem().toString());
+                newTaskItem.setReminder(duration.getSelectedItem().toString());
                 break;
             }
             default:
@@ -189,7 +189,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
                 // send data from the AlertDialog to the Activity
                 EditText editText = customLayout.findViewById(R.id.tag_name_edit_text);
-                ListClass list = new ListClass(editText.getText().toString());
+                ListItem list = new ListItem(editText.getText().toString());
                 database.create_list_with_name_only(list);
                 loadSpinnerData();
             }
@@ -224,20 +224,20 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         checkEmptyFieldsWithToasts();
         if(isThreeRequiredFieldsAreFilled())
         {
-            newTask.setName_of_task(name.getText().toString());
-            newTask.setPriority(selectedPriority.getText().toString());
+            newTaskItem.setName(name.getText().toString());
+            newTaskItem.setPriority(selectedPriority.getText().toString());
 
-            database.create_Task_with_Name_only(newTask);
+            database.create_Task_with_Name_only(newTaskItem);
         }
         else if(isAllFieldsAreFilled())
         {
-            newTask.setName_of_task(name.getText().toString());
-            newTask.setPriority(selectedPriority.getText().toString());
-            newTask.setDate(date.getText().toString());
-            newTask.setTime(date.getText().toString());
-            newTask.setDescription(description.getText().toString());
+            newTaskItem.setName(name.getText().toString());
+            newTaskItem.setPriority(selectedPriority.getText().toString());
+            newTaskItem.setDate(date.getText().toString());
+            newTaskItem.setTime(date.getText().toString());
+            newTaskItem.setDescription(description.getText().toString());
 
-            database.create_Task(newTask);
+            database.create_Task(newTaskItem);
         }
     }
 

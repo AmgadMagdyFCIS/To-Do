@@ -3,12 +3,21 @@ package com.example.to_do.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.to_do.Database.TaskItem;
+import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
+import com.example.to_do.Recyclers.RecyclerViewAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,33 +26,23 @@ import com.example.to_do.R;
  */
 public class DoneFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static String listName ;
+    private String list;
+
+    RecyclerView recyclerView;
+    private List<TaskItem> recyclerViewItems;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ToDoDBHelper dbHelper;
 
     public DoneFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DoneFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DoneFragment newInstance(String param1, String param2) {
+    public static DoneFragment newInstance(String param1) {
         DoneFragment fragment = new DoneFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(listName, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +50,32 @@ public class DoneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            list = getArguments().getString(listName);
+            ;
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_done, container, false);
+        View view = inflater.inflate(R.layout.fragment_done, container, false);
+        recyclerViewItems = new ArrayList<>();
+
+        recyclerView = view.findViewById(R.id.lists);
+
+        //db
+        dbHelper= new ToDoDBHelper(getActivity());
+
+
+
+        //recycler view adapter
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(recyclerViewAdapter);
+        return view;
     }
 }

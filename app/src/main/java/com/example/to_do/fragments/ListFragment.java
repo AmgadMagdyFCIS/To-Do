@@ -12,9 +12,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.to_do.R;
+import com.example.to_do.Recyclers.RecyclerViewAdapter;
 import com.example.to_do.activity.MainActivity;
 import com.example.to_do.viewpager.ViewPagerAdapter;
 import com.example.to_do.viewpager.ViewPagerItem;
@@ -32,34 +35,19 @@ public class ListFragment extends Fragment {
     FloatingActionButton fab;
     Toolbar toolbar;
 
-    /* // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static String listName ;
+    private String list;
+    private RecyclerViewAdapter recyclerViewAdapter;
 
     public ListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListFragment newInstance(/*String param1, String param2*/) {
+    public static ListFragment newInstance(String param1) {
         ListFragment fragment = new ListFragment();
-        /*Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
+        Bundle args = new Bundle();
+        args.putString(listName, param1);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -68,10 +56,10 @@ public class ListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-       /* if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        if (getArguments() != null) {
+            list = getArguments().getString(listName);
+;
+        }
     }
 
 
@@ -80,20 +68,29 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
+        // toolbar
         toolbar = view.findViewById(R.id.toolbarOfListFragment);
-
         ((MainActivity) getActivity()).getSupportActionBar().hide();
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
 
 
+        //view pager
         viewPager = view.findViewById(R.id.viewPager);
-
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getViewPagerItems());
         viewPager.setAdapter(viewPagerAdapter);
 
+        //tab layout
         tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+
+
+
+
+
+
+
+        //floating button
         fab = view.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +98,6 @@ public class ListFragment extends Fragment {
                 Toast.makeText(getActivity(), "hiiiiiii", Toast.LENGTH_LONG).show();
             }
         });
-
 
         return view;
     }

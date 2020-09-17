@@ -4,22 +4,18 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
-import com.example.to_do.Recyclers.ListItem;
 import com.example.to_do.Recyclers.RecyclerViewAdapter;
-import com.example.to_do.activity.MainActivity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +46,7 @@ public class MainFragment extends Fragment {
             cur.moveToNext();
         }
 
-        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), recyclerViewItems);
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), recyclerViewItems,0);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
