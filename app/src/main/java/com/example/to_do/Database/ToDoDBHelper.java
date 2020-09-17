@@ -13,6 +13,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase sqLiteDatabase;
     private SQLiteDatabase toDoDatabase;
+
     public ToDoDBHelper(Context context) {
         super(context, Constants.DATABASE_NAME, null, 1);
     }
@@ -43,14 +44,12 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     }
 
 
-
-
     public void create_Task(TaskItem tc) {
         ContentValues row = new ContentValues();
-//        Cursor cur = Fetchlist(tc.getListName()) ;
+   //     Cursor cur = Fetchlist(tc.getListName()) ;
         row.put("name_of_task", tc.getName());
         row.put("name_of_list", tc.getListName());
-//     increase(tc.getListName()) ;
+     //   increase(tc.getListName()) ;
         row.put("Date", tc.getDate());
         row.put("Time", tc.getTime());
         row.put("Priority", tc.getPriority());
@@ -59,25 +58,24 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         row.put("Done", 0);
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_Task", null, row);
-        toDoDatabase.close();
     }
 
     public void create_Task_with_Name_only(TaskItem tc) {
         ContentValues row = new ContentValues();
-       // Cursor cur = Fetchlist(tc.getListName()) ;
+     //    Cursor cur = Fetchlist(tc.getListName()) ;
         row.put("name_of_task", tc.getName());
         row.put("name_of_list", tc.getListName());
         row.put("Date", tc.getDate());
         row.put("Time", tc.getTime());
-        row.put("Priority" , tc.getPriority());
+        row.put("Priority", tc.getPriority());
         row.put("Description", tc.getDescription());
-        row.put("Reminder" , tc.getReminder());
+        row.put("Reminder", tc.getReminder());
         row.put("Done", 0);
-      //  increase(tc.getListName()) ;
+    //      increase(tc.getListName()) ;
 
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_Task", null, row);
-        toDoDatabase.close();
+
     }
 
 
@@ -88,7 +86,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         row.put("Description", lc.getDescription());
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_List", null, row);
-        toDoDatabase.close();
+
     }
 
     public void create_list_with_name_only(ListItem lc) {
@@ -97,7 +95,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_List", null, row);
-        toDoDatabase.close();
+
     }
 
     public Cursor fetchAllTasks() {
@@ -107,7 +105,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        toDoDatabase.close();
+
         return cursor;
     }
 
@@ -118,11 +116,11 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        toDoDatabase.close();
+
         return cursor;
     }
 
-    public List<String> getAllLists(){
+    public List<String> getAllLists() {
         List<String> list = new ArrayList<String>();
 
         String selectQuery = "SELECT  * FROM " + "To_do_List";
@@ -154,32 +152,56 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         row.put("Reminder", NewReminder);
         row.put("Done", NewDone);
         toDoDatabase.update("To_do_Task", row, "name_of_task like ?", new String[]{OldName});
-        toDoDatabase.close();
+
     }
+
+    public void FinishTask(String taskName) {
+        Cursor cur = FetchSpecificeTask(taskName);
+
+        toDoDatabase = getReadableDatabase();
+        ContentValues row = new ContentValues();
+
+        row.put("name_of_task", cur.getString(0));
+        row.put("name_of_list", cur.getString(1));
+        row.put("Date", cur.getString(2));
+        row.put("Time", cur.getString(3));
+        row.put("Priority", cur.getString(4));
+        row.put("Description", cur.getString(5));
+        row.put("Reminder", cur.getString(6));
+
+        if (cur.getInt(7) == 0)
+            row.put("Done", 1);
+        else
+            row.put("Done", 0);
+
+        toDoDatabase.update("To_do_Task", row, "name_of_task like ?", new String[]{cur.getString(0)});
+
+    }
+
 
     public void DeleteTask(String name) {
         toDoDatabase = getWritableDatabase();
-        Cursor cur =Fetchlistusingtask(name) ;
-        decrease(cur.getString(1)) ;
+        Cursor cur = Fetchlistusingtask(name);
+        decrease(cur.getString(1));
         toDoDatabase.delete("To_do_Task", "name_of_task='" + name + "'", null);
-        toDoDatabase.close();
+
     }
 
     public void UpdateList(String NEWname_of_list, String OldName, String NewDescription) {
         toDoDatabase = getReadableDatabase();
-        Cursor cur =Fetchlist(OldName) ;
+        Cursor cur = Fetchlist(OldName);
         ContentValues row = new ContentValues();
         row.put("name_of_list", NEWname_of_list);
         row.put("NumberOfTasks", cur.getInt(1));
         row.put("Description", NewDescription);
         toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{OldName});
-        toDoDatabase.close();
+
     }
 
     public void DeleteList(String name) {
         toDoDatabase = getWritableDatabase();
         toDoDatabase.delete("To_do_List", "name_of_list='" + name + "'", null);
-        toDoDatabase.close();
+
     }
 
     public ArrayList<TaskItem> ReturnTasksOfSpecificList(String NameList, int done) {
@@ -191,78 +213,90 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         Cursor curs = fetchAllTasks();
         while (!curs.isAfterLast()) {
             if (curs.getString(1).equalsIgnoreCase(NameList) && curs.getInt(7) == done) {
-                List.add(new TaskItem(curs.getString(0),curs.getString(1),curs.getString(2),curs.getString(3),curs.getString(4),curs.getString(5),curs.getString(6)));
+                List.add(new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6)));
             }
             curs.moveToNext();
         }
         curs.close();
-        toDoDatabase.close();
+
         return List;
     }
 
 
-    public Cursor Fetchlist (String name) {
+    public Cursor Fetchlist(String name) {
         // Cursor cur = fetchAllLists();
         //cur.getInt()
-        toDoDatabase =getReadableDatabase();
-        String [] arg={name} ;
-        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_List where name_of_list like ?",arg) ;
-        toDoDatabase.close();
-        return  cur ;
+        toDoDatabase = getReadableDatabase();
+        String[] arg = {name};
+        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_List where name_of_list = ?", arg);
+
+        return cur;
     }
 
 
-    public Cursor FetchSpecificeTask (String tname) {
-        toDoDatabase =getReadableDatabase();
-        String [] arg={tname} ;
-        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_Task where tname like ?",arg) ;
-        toDoDatabase.close();
-        return  cur ;
+    public Cursor FetchSpecificeTask(String tname) {
+        toDoDatabase = getReadableDatabase();
+        String[] arg = {tname};
+        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_Task where tname like ?", arg);
+
+        return cur;
     }
 
 
-    public void increase(String OldName){
-        Cursor cur =Fetchlist(OldName) ;
+    public void increase(String OldName) {
+        Cursor cur = Fetchlist(OldName);
+        toDoDatabase = getWritableDatabase();
+        ContentValues row = new ContentValues();
+        row.put("name_of_list", OldName);
+        row.put("NumberOfTasks", (cur.getInt(1) + 1));
+        row.put("Description", cur.getString(2));
+        toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{OldName});
+
+    }
+
+    public void decrease(String OldName) {
+        Cursor cur = Fetchlist(OldName);
+        toDoDatabase = getWritableDatabase();
+        ContentValues row = new ContentValues();
+        row.put("name_of_list", OldName);
+        row.put("NumberOfTasks", (cur.getInt(1) - 1));
+        row.put("Description", cur.getString(2));
+        toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{OldName});
+
+    }
+
+    public void ZeroTasks(String OldName) {
+        Cursor cur = Fetchlist(OldName);
         toDoDatabase = getReadableDatabase();
         ContentValues row = new ContentValues();
         row.put("name_of_list", OldName);
-        row.put("NumberOfTasks", (cur.getInt(1)+1)) ;
+        row.put("NumberOfTasks", 0);
         row.put("Description", cur.getString(2));
         toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{OldName});
-        toDoDatabase.close();
+
     }
 
-    public void decrease(String OldName){
-        Cursor cur =Fetchlist(OldName) ;
-        toDoDatabase = getReadableDatabase();
-        ContentValues row = new ContentValues();
-        row.put("name_of_list", OldName);
-        row.put("NumberOfTasks", (cur.getInt(1)-1)) ;
-        row.put("Description", cur.getString(2));
-        toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{OldName});
-        toDoDatabase.close();
-    }
-
-    public Cursor Fetchlistusingtask (String tname) {
+    public Cursor Fetchlistusingtask(String tname) {
         // Cursor cur = fetchAllLists();
         //cur.getInt()
-        toDoDatabase =getReadableDatabase();
-        String [] arg={tname} ;
-        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_Task where name like ?",arg) ;
-        toDoDatabase.close();
-        return  cur ;
+        toDoDatabase = getReadableDatabase();
+        String[] arg = {tname};
+        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_Task where name like ?", arg);
+
+        return cur;
     }
 
 
+    public void ClearList(String listName) {
+
+        toDoDatabase = getWritableDatabase();
+        toDoDatabase.delete("To_do_Task", "name_of_list='" + listName + "'", null);
+        ZeroTasks(listName);
 
 
+    }
 
-
-
-
-
-
-    public void SignUp(String firstName, String lastName,String email, String password) {
+    public void SignUp(String firstName, String lastName, String email, String password) {
 
         SQLiteDatabase db = getWritableDatabase();
 

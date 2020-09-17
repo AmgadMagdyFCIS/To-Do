@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="10dp"
-    android:background="#34b7eb"
+    android:background="#fff"
     android:padding="10dp"
     tools:context=".fragments.AddTaskFragment">
 
