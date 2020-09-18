@@ -14,6 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.to_do.Database.SortAlphabetically;
+import com.example.to_do.Database.SortByDate;
+import com.example.to_do.Database.SortByPriority;
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
@@ -24,11 +27,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ListFragment extends Fragment {
 
 
+    String clearAll="0";
     ViewPager viewPager;
     TabLayout tabs;
     FloatingActionButton fab;
@@ -121,25 +127,26 @@ public class ListFragment extends Fragment {
             case R.id.sort:
 
 
+
                 return true;
             case R.id.sortByPriority:
 
+                Collections.sort(taskslist,new SortByPriority());
 
                 return true;
             case R.id.sortAlphabetically:
+                Collections.sort(taskslist,new SortAlphabetically());
 
 
                 return true;
             case R.id.sortByDate:
+                Collections.sort(taskslist,new SortByDate());
 
 
                 return true;
 
-            case R.id.theme:
-
-
-                return true;
             case R.id.clearAll:
+                 clearAll="1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
 
                 return true;
             case R.id.delete:
@@ -151,8 +158,8 @@ public class ListFragment extends Fragment {
 
     private List<ViewPagerItem> getViewPagerItems() {
         List<ViewPagerItem> viewPagerItems = new ArrayList<>();
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks) + "\n" + taskslist.size(), TasksFragment.newInstance(list)));
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.done) + "\n" + doneList.size(), DoneFragment.newInstance(list)));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks) + "\n" + taskslist.size(), TasksFragment.newInstance(list,clearAll)));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.done) + "\n" + doneList.size(), DoneFragment.newInstance(list,clearAll)));
         return viewPagerItems;
     }
 

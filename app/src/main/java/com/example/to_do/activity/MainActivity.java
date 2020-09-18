@@ -12,30 +12,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.to_do.R;
 import com.example.to_do.fragments.AddListFragment;
-import com.example.to_do.fragments.AddTaskFragment;
-import com.example.to_do.fragments.ListFragment;
 import com.example.to_do.fragments.MainFragment;
 import com.example.to_do.fragments.SearchFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout drawer;
     Toolbar toolbar;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     boolean isFragmentOpen = false;
     ActionBarDrawerToggle toggle;
     Button search;
-
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            navigate(new SearchFragment());
+                navigate(new SearchFragment());
             }
         });
     }
@@ -99,10 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
 
             case R.id.home:
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.container, new MainFragment());
-                fragmentTransaction.commit();
+                navigate(new MainFragment());
                 isFragmentOpen = true;
                 break;
 

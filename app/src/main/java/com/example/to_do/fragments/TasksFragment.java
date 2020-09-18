@@ -23,8 +23,8 @@ import java.util.List;
 
 public class TasksFragment extends Fragment {
 
-    private static String listName ;
-    private String list;
+    private static String listName ,clearAll;
+    private String list ,clear;
 
     RecyclerView recyclerView;
     private List<TaskItem> recyclerViewItems;
@@ -35,10 +35,11 @@ public class TasksFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TasksFragment newInstance(String param1) {
+    public static TasksFragment newInstance(String param1, String param2) {
         TasksFragment fragment = new TasksFragment();
         Bundle args = new Bundle();
         args.putString(listName, param1);
+        args.putString(clearAll, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +51,7 @@ public class TasksFragment extends Fragment {
 
         if (getArguments() != null) {
             list = getArguments().getString(listName);
-
+            clear = getArguments().getString(clearAll);
         }
     }
 
