@@ -37,7 +37,7 @@ public class ListFragment extends Fragment {
     private List<TaskItem> taskslist;
     private ToDoDBHelper dbHelper;
 
-    private static String listName ;
+    private static String listName;
     private String list;
 
 
@@ -60,7 +60,7 @@ public class ListFragment extends Fragment {
 
         if (getArguments() != null) {
             list = getArguments().getString(listName);
-;
+            ;
         }
     }
 
@@ -86,17 +86,11 @@ public class ListFragment extends Fragment {
         tabs.setupWithViewPager(viewPager);
 
 
-        taskslist=new ArrayList<>();
-        doneList=new ArrayList<>();
-        dbHelper= new ToDoDBHelper(getActivity());
-        taskslist=dbHelper.ReturnTasksOfSpecificList(list,0);
-        doneList=dbHelper.ReturnTasksOfSpecificList(list,1);
-
-
-
-
-
-
+        taskslist = new ArrayList<>();
+        doneList = new ArrayList<>();
+        dbHelper = new ToDoDBHelper(getActivity());
+        taskslist = dbHelper.ReturnTasksOfSpecificList(list, 0);
+        doneList = dbHelper.ReturnTasksOfSpecificList(list, 1);
 
 
         //floating button
@@ -122,7 +116,7 @@ public class ListFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.app_bar_search:
-                getFragmentManager().beginTransaction().replace(R.id.container,new SearchFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, new SearchFragment()).commit();
                 return true;
             case R.id.sort:
 
@@ -157,8 +151,8 @@ public class ListFragment extends Fragment {
 
     private List<ViewPagerItem> getViewPagerItems() {
         List<ViewPagerItem> viewPagerItems = new ArrayList<>();
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks)+"\n"+taskslist.size(), TasksFragment.newInstance(list)));
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.done)+"\n"+doneList.size(), DoneFragment.newInstance(list)));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks) + "\n" + taskslist.size(), TasksFragment.newInstance(list)));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.done) + "\n" + doneList.size(), DoneFragment.newInstance(list)));
         return viewPagerItems;
     }
 
