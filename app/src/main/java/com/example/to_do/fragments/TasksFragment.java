@@ -64,7 +64,7 @@ public class TasksFragment extends Fragment implements Click {
 
         recyclerViewItems = new ArrayList<>();
 
-        recyclerView = view.findViewById(R.id.lists);
+        recyclerView = view.findViewById(R.id.tasksList);
 
         //db
         dbHelper= new ToDoDBHelper(getActivity());

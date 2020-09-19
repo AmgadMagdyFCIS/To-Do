@@ -78,13 +78,7 @@ public class ListFragment extends Fragment {
 
 
         //view pager
-        viewPager = view.findViewById(R.id.viewPager);
-        viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getViewPagerItems());
-        viewPager.setAdapter(viewPagerAdapter);
 
-        //tab layout
-        tabs = view.findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
 
 
         taskslist = new ArrayList<>();
@@ -93,6 +87,13 @@ public class ListFragment extends Fragment {
         taskslist = dbHelper.ReturnTasksOfSpecificList(list, 0);
         doneList = dbHelper.ReturnTasksOfSpecificList(list, 1);
 
+        viewPager = view.findViewById(R.id.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getViewPagerItems());
+        viewPager.setAdapter(viewPagerAdapter);
+
+        //tab layout
+        tabs = view.findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
 
         //floating button
         fab = view.findViewById(R.id.floatingActionButton);

@@ -66,7 +66,7 @@ public class DoneFragment extends Fragment implements Click {
         View view = inflater.inflate(R.layout.fragment_done, container, false);
         recyclerViewItems = new ArrayList<>();
 
-        recyclerView = view.findViewById(R.id.lists);
+        recyclerView = view.findViewById(R.id.doneLists);
 
         //db
         dbHelper= new ToDoDBHelper(getActivity());
