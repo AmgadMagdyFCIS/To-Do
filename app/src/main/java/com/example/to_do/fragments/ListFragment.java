@@ -76,11 +76,6 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        // toolbar
-        toolbar = view.findViewById(R.id.toolbarOfListFragment);
-        ((MainActivity) getActivity()).getSupportActionBar().hide();
-        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
-
 
         //view pager
         viewPager = view.findViewById(R.id.viewPager);
@@ -162,8 +157,8 @@ public class ListFragment extends Fragment {
 
     private List<ViewPagerItem> getViewPagerItems() {
         List<ViewPagerItem> viewPagerItems = new ArrayList<>();
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks) + "\n" + taskslist.size(), TasksFragment.newInstance(list,clearAll)));
-        viewPagerItems.add(new ViewPagerItem(getString(R.string.done) + "\n" + doneList.size(), DoneFragment.newInstance(list,clearAll)));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.tasks) + "\n" + taskslist.size(), TasksFragment.newInstance(list)));
+        viewPagerItems.add(new ViewPagerItem(getString(R.string.done) + "\n" + doneList.size(), DoneFragment.newInstance(list)));
         return viewPagerItems;
     }
 

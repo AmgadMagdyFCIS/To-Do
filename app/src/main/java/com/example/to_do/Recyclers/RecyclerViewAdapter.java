@@ -90,28 +90,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 listName = itemView.findViewById(R.id.name);
                 numberOfTasks = itemView.findViewById(R.id.number_of_tasks);
 
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        click.onRecyclerViewClick(getAdapterPosition());
+                    }
+                });
 
             }
             else
             {
                 taskName=itemView.findViewById(R.id.taskName);
-
-            }
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (getAdapterPosition() != -1) {
-                        if(type==0) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (getAdapterPosition() != -1) {
 
                             click.onRecyclerViewClick(getAdapterPosition());
-                        }
-                        else
-                        {
-                            click.onRecyclerViewClick(getAdapterPosition());
+
                         }
                     }
-                }
-            });
+                });
+            }
+
         }
     }
 

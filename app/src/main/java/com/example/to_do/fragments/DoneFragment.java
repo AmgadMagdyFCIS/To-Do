@@ -40,11 +40,11 @@ public class DoneFragment extends Fragment implements Click {
         // Required empty public constructor
     }
 
-    public static DoneFragment newInstance(String param1, String param2) {
+    public static DoneFragment newInstance(String param1/*, String param2*/) {
         DoneFragment fragment = new DoneFragment();
         Bundle args = new Bundle();
         args.putString(listName, param1);
-        args.putString(clearAll, param2);
+        //args.putString(clearAll, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +56,7 @@ public class DoneFragment extends Fragment implements Click {
 
         if (getArguments() != null) {
             list = getArguments().getString(listName);
-            clear = getArguments().getString(clearAll);
+            //clear = getArguments().getString(clearAll);
         }
     }
     @Override

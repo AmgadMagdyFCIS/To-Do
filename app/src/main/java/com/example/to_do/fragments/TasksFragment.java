@@ -36,11 +36,11 @@ public class TasksFragment extends Fragment implements Click {
         // Required empty public constructor
     }
 
-    public static TasksFragment newInstance(String param1, String param2) {
+    public static TasksFragment newInstance(String param1/*, String param2*/) {
         TasksFragment fragment = new TasksFragment();
         Bundle args = new Bundle();
         args.putString(listName, param1);
-        args.putString(clearAll, param2);
+       // args.putString(clearAll, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +52,7 @@ public class TasksFragment extends Fragment implements Click {
 
         if (getArguments() != null) {
             list = getArguments().getString(listName);
-            clear = getArguments().getString(clearAll);
+            //clear = getArguments().getString(clearAll);
         }
     }
 
