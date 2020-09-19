@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         {
             case R.id.sign_in_button:
             {
+                getDataFromEditTexts();
                 if(isDataValid() && database.ValidateUserData(Email,Password))
                 {
                     Intent Main = new Intent(Login.this,MainActivity.class);
@@ -43,9 +44,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }
                 else
                 {
-                    if(database.isEmailFound(Email) && !database.isPasswordFound(Password) && !Password.isEmpty())
+                    if(database.isEmailFound(Email) && !database.isPasswordFound(Password))
                     {
-                        Toast.makeText(Login.this,"Wrong Password",Toast.LENGTH_SHORT).show();
+                        PasswordField.setError("Wrong Password");
                     }
                 }
                 break;
@@ -76,8 +77,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         ForgetPassword = findViewById(R.id.forget_password_text_view);
         LoginBtn = findViewById(R.id.sign_in_button);
 
-        Email = EmailField.getText().toString();
-        Password = PasswordField.getText().toString();
 
         SignUp.setOnClickListener(this);
         ForgetPassword.setOnClickListener(this);
@@ -87,15 +86,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private boolean isDataValid()
     {
         boolean isValid = true;
-        String email = EmailField.getText().toString();
-        String password = PasswordField.getText().toString();
 
-        if (!isEmail(email)) {
+        if (!isEmail(Email)) {
             EmailField.setError("Valid email is required!");
             isValid = false;
         }
 
-        if (password.isEmpty()) {
+        if (Password.isEmpty()) {
             PasswordField.setError("Password is required!");
             isValid = false;
         }
@@ -108,4 +105,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         return !email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    private void getDataFromEditTexts()
+    {
+        Email = EmailField.getText().toString();
+        Password = PasswordField.getText().toString();
+    }
 }

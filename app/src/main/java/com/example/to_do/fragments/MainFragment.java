@@ -81,7 +81,7 @@ public class MainFragment extends Fragment implements Click {
     @Override
     public void onRecyclerViewClick(int pos) {
 
-        ListItem listItem =recyclerViewItems.get(pos);
+        ListItem listItem = recyclerViewItems.get(pos);
         Toast.makeText(getActivity(),listItem.getName(),Toast.LENGTH_SHORT).show();
         getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(listItem.getName())).commit();
     }

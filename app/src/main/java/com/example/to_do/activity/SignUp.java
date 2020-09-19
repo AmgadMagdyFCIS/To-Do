@@ -37,6 +37,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             {
                 if(isDataValid())
                 {
+                    getDataFromEditTexts();
                     database.SignUp(FirstName,LastName,Email,Password);
                     clearFields();
                     Intent login = new Intent(getApplicationContext(),Login.class);
@@ -62,11 +63,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         EmailField = findViewById(R.id.signup_email_edit_text);
         PasswordField = findViewById(R.id.signup_password_edit_text);
         SignUpBtn = findViewById(R.id.sign_up_button);
-
-        FirstName = FirstNameField.getText().toString();
-        LastName = LastNameField.getText().toString();
-        Email = EmailField.getText().toString();
-        Password = PasswordField.getText().toString();
 
         SignUpBtn.setOnClickListener(this);
 
@@ -117,5 +113,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         return !email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    private void getDataFromEditTexts()
+    {
+        FirstName = FirstNameField.getText().toString();
+        LastName = LastNameField.getText().toString();
+        Email = EmailField.getText().toString();
+        Password = PasswordField.getText().toString();
+    }
 
 }
