@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.R;
+import com.example.to_do.fragments.ListFragment;
 
 import java.util.List;
 
@@ -21,16 +22,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context context;
     private List<TaskItem> tasksList;
     private List<ListItem> listsList;
+    private Click click;
     private int type;
 
-    public RecyclerViewAdapter(Context context, int type,List<TaskItem> tasks ) {
+    public RecyclerViewAdapter(Context context, int type,List<TaskItem> tasks , Click click) {
         this.context = context;
         this.tasksList = tasks;
+        this.click=click;
         this.type=type;
     }
-    public RecyclerViewAdapter(Context context, List<ListItem> lists ,int type) {
+    public RecyclerViewAdapter(Context context, List<ListItem> lists ,int type , Click click) {
         this.context = context;
         this.listsList = lists;
+        this.click=click;
         this.type=type;
     }
 
@@ -53,7 +57,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             ListItem recyclerViewListItem = listsList.get(position);
             holder.listName.setText(recyclerViewListItem.getName());
             holder.numberOfTasks.setText(String.valueOf(recyclerViewListItem.getNumberOfTasks()));
-            holder.description.setText(recyclerViewListItem.getDescription());
         }
         else
         {
@@ -76,7 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView listName,numberOfTasks,description;
+        TextView listName,numberOfTasks;
 
         TextView taskName;
 
@@ -86,7 +89,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if(type==0) {
                 listName = itemView.findViewById(R.id.name);
                 numberOfTasks = itemView.findViewById(R.id.number_of_tasks);
-                description = itemView.findViewById(R.id.description);
+
 
             }
             else
@@ -99,13 +102,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View view) {
                     if (getAdapterPosition() != -1) {
                         if(type==0) {
-                            ListItem list = listsList.get(getAdapterPosition());
-                            Toast.makeText(context, list.getName(), Toast.LENGTH_LONG).show();
+
+                            click.onRecyclerViewClick(getAdapterPosition());
                         }
                         else
                         {
-                            TaskItem task = tasksList.get(getAdapterPosition());
-                            Toast.makeText(context, task.getName(), Toast.LENGTH_LONG).show();
+                            click.onRecyclerViewClick(getAdapterPosition());
                         }
                     }
                 }

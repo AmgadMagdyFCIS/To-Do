@@ -20,6 +20,7 @@ import com.example.to_do.R;
 import com.example.to_do.fragments.AddListFragment;
 import com.example.to_do.fragments.MainFragment;
 import com.example.to_do.fragments.SearchFragment;
+import com.google.android.material.internal.NavigationMenuItemView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentTransaction fragmentTransaction;
     boolean isFragmentOpen = false;
     ActionBarDrawerToggle toggle;
-    Button search;
     private DrawerLayout drawer;
 
     @Override
@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        search = findViewById(R.id.search);
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
+
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.add(R.id.container, new MainFragment());
         fragmentTransaction.commit();
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navigate(new SearchFragment());
-            }
-        });
     }
 
     @Override

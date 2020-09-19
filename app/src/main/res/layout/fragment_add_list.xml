@@ -2,90 +2,63 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
+    android:layout_width="300dp"
     android:layout_height="400dp"
-    android:elevation="10dp"
     android:layout_gravity="center"
-    android:background="#a7b4c9"
+    android:background="#ffffff"
+    android:elevation="10dp"
     tools:context=".fragments.AddListFragment">
 
     <!-- Anas-->
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/cancel_new_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="24dp"
-            android:text="Cancel"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_list_description" />
-
-        <TextView
-            android:id="@+id/add_new_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:text="Add list"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_list_description" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/Create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginLeft="140dp"
-            android:layout_marginTop="72dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
             android:text="Create"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/to_do"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="104dp"
-            android:layout_marginLeft="104dp"
+            android:layout_gravity="center"
             android:text="To-Do List"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Create" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/new_list_name"
             android:layout_width="237dp"
             android:layout_height="56dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginLeft="56dp"
-            android:layout_marginTop="36dp"
+            android:layout_gravity="center"
             android:ems="10"
             android:hint='List Name: "Shopping"'
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/to_do" />
+            android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/new_list_description"
-            android:layout_width="233dp"
-            android:layout_height="71dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginLeft="56dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_list_name" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/cancel_new_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Cancel"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/add_new_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
+            android:text="Add list"
+            android:textSize="28sp" />
+    </LinearLayout>
+
 </FrameLayout>

@@ -27,7 +27,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
                 + Constants.UserTable.EMAIL + " text not null, " + Constants.UserTable.PASSWORD + " text not null " + ")");
 
         sqLiteDatabase.execSQL("create table To_do_List (name_of_list String primary Key," +
-                " NumberOfTasks Integer ,Description String)");
+                " NumberOfTasks Integer )");
 
         sqLiteDatabase.execSQL("create table To_do_Task(name_of_task String primary key," +
                 "name_of_list String ,Date String ,Time String ,"
@@ -80,7 +80,6 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         ContentValues row = new ContentValues();
         row.put("name_of_list", lc.getName());
         row.put("NumberOfTasks", 0);
-        row.put("Description", lc.getDescription());
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_List", null, row);
 
@@ -90,7 +89,6 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         ContentValues row = new ContentValues();
         row.put("name_of_list", lc.getName());
         row.put("NumberOfTasks", 0);
-        row.put("Description", "");
         toDoDatabase = getWritableDatabase();
         toDoDatabase.insert("To_do_List", null, row);
 
@@ -109,7 +107,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     public Cursor fetchAllLists() {
         toDoDatabase = getReadableDatabase();
-        String[] rowDetails = {"name_of_list", "NumberOfTasks", "Description"};
+        String[] rowDetails = {"name_of_list", "NumberOfTasks"};
         Cursor cursor = toDoDatabase.query("To_do_List", rowDetails, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -191,7 +189,6 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         ContentValues row = new ContentValues();
         row.put("name_of_list", NEWname_of_list);
         row.put("NumberOfTasks", cur.getInt(1));
-        row.put("Description", NewDescription);
         toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{OldName});
 
     }
@@ -242,7 +239,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         row.put("name_of_list", cur.getString(0));
         int n=cur.getInt(1) ;
         row.put("NumberOfTasks", (n+1));
-        row.put("Description", cur.getString(2));
+
         toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{cur.getString(0)});
 
     }
@@ -253,7 +250,6 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         ContentValues row = new ContentValues();
         row.put("name_of_list", cur.getString(0));
         row.put("NumberOfTasks", (cur.getInt(1) - 1));
-        row.put("Description", cur.getString(2));
         toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{cur.getString(0)});
 
     }
@@ -264,7 +260,6 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         ContentValues row = new ContentValues();
         row.put("name_of_list", cur.getString(0));
         row.put("NumberOfTasks", 0);
-        row.put("Description", cur.getString(2));
         toDoDatabase.update("To_do_List", row, "name_of_list like ?", new String[]{cur.getString(0)});
 
     }

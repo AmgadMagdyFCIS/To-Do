@@ -107,6 +107,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
             case R.id.add_task_button:
             {
                 AddTaskToDBBasedOnFilledFields();
+                getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
                 break;
             }
             case R.id.task_tags_add_button:

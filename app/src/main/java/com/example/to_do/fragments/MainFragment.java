@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
+import com.example.to_do.Recyclers.Click;
 import com.example.to_do.Recyclers.RecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements Click {
 
     RecyclerView recyclerView;
     private List<ListItem> recyclerViewItems;
@@ -46,22 +48,20 @@ public class MainFragment extends Fragment {
         Cursor cur = dbHelper.fetchAllLists();
 
         while (!cur.isAfterLast()) {
-            recyclerViewItems.add(new ListItem(cur.getString(0), cur.getInt(1), cur.getString(2)));
+            recyclerViewItems.add(new ListItem(cur.getString(0), cur.getInt(1)));
             cur.moveToNext();
         }
 
-        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), recyclerViewItems, 0);
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), recyclerViewItems, 0, this);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(recyclerViewAdapter);
+
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.drawer, new AddTaskFragment(), "fragment_screen");
-                ft.commit();
+                getFragmentManager().beginTransaction().add(R.id.container, new AddListFragment()).commit();
             }
         });
 
@@ -72,10 +72,17 @@ public class MainFragment extends Fragment {
     private List<ListItem> setTasks() {
         List<ListItem> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            list.add(new ListItem("Anas" + i, (7 + i), "high" + i));
+            list.add(new ListItem("Anas" + i, (7 + i)));
         }
 
         return list;
     }
 
+    @Override
+    public void onRecyclerViewClick(int pos) {
+
+        ListItem listItem =recyclerViewItems.get(pos);
+        Toast.makeText(getActivity(),listItem.getName(),Toast.LENGTH_LONG).show();
+        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(listItem.getName())).commit();
+    }
 }

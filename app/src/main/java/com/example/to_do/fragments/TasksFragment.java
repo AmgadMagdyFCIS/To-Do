@@ -15,13 +15,14 @@ import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
+import com.example.to_do.Recyclers.Click;
 import com.example.to_do.Recyclers.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class TasksFragment extends Fragment {
+public class TasksFragment extends Fragment implements Click {
 
     private static String listName ,clearAll;
     private String list ,clear;
@@ -72,11 +73,16 @@ public class TasksFragment extends Fragment {
 
 
         //recycler view adapter
-        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems);
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems , this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(recyclerViewAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onRecyclerViewClick(int pos) {
+
     }
 }

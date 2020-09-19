@@ -24,7 +24,7 @@ public class AddListFragment extends Fragment {
 
     private ToDoDBHelper toDoDBHelper;
     private TextView create,toDo,addNewList,cancelNewList;
-    private EditText name,description;
+    private EditText name;
 
     @Nullable
     @Override
@@ -34,7 +34,6 @@ public class AddListFragment extends Fragment {
         toDo = view.findViewById(R.id.to_do);
 
         name = view.findViewById(R.id.new_list_name);
-        description = view.findViewById(R.id.new_list_description);
 
         addNewList = view.findViewById(R.id.add_new_list);
         cancelNewList = view.findViewById(R.id.cancel_new_list);
@@ -44,10 +43,9 @@ public class AddListFragment extends Fragment {
         addNewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListItem l = new ListItem(name.getText().toString(),0,description.getText().toString());
+                ListItem l = new ListItem(name.getText().toString(),0);
                 toDoDBHelper.create_list(l);
-                Intent Main = new Intent(getActivity(), MainActivity.class);
-                startActivity(Main);
+                getFragmentManager().beginTransaction().add(R.id.container, new MainFragment()).commit();
                 Toast.makeText(getContext()," Added "+name.getText().toString(),Toast.LENGTH_SHORT).show();
             }
         });

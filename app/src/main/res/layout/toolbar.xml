@@ -6,6 +6,6 @@
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Light">
 
 </androidx.appcompat.widget.Toolbar>

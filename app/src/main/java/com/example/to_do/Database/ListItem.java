@@ -1,13 +1,13 @@
 package com.example.to_do.Database;
 
 public class ListItem {
-    private String name, description;
+    private String name;
     private int numberOfTasks;
 
-    public ListItem(String name, int numberOfTasks, String description) {
+    public ListItem(String name, int numberOfTasks) {
         this.name = name;
         this.numberOfTasks = numberOfTasks;
-        this.description = description;
+
     }
 
     public ListItem(String name_of_list) {
@@ -22,17 +22,11 @@ public class ListItem {
         return numberOfTasks;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public void setNumberOfTasks(int numberOfTasks) {
         this.numberOfTasks = numberOfTasks;

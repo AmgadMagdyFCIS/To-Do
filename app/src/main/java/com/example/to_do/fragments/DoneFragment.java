@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
+import com.example.to_do.Recyclers.Click;
 import com.example.to_do.Recyclers.RecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
  * Use the {@link DoneFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DoneFragment extends Fragment {
+public class DoneFragment extends Fragment implements Click {
 
 
     private static String listName ,clearAll;
@@ -74,10 +75,15 @@ public class DoneFragment extends Fragment {
 
 
         //recycler view adapter
-        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems);
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(recyclerViewAdapter);
         return view;
+    }
+
+    @Override
+    public void onRecyclerViewClick(int pos) {
+
     }
 }

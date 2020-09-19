@@ -45,7 +45,7 @@ public class ListFragment extends Fragment {
 
     private static String listName;
     private String list;
-
+    ViewPagerAdapter viewPagerAdapter;
 
     public ListFragment() {
         // Required empty public constructor
@@ -84,7 +84,7 @@ public class ListFragment extends Fragment {
 
         //view pager
         viewPager = view.findViewById(R.id.viewPager);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getViewPagerItems());
+        viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getViewPagerItems());
         viewPager.setAdapter(viewPagerAdapter);
 
         //tab layout
@@ -104,7 +104,7 @@ public class ListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "hiiiiiii", Toast.LENGTH_LONG).show();
+                getFragmentManager().beginTransaction().add(R.id.container, new AddTaskFragment()).commit();
             }
         });
 
@@ -146,7 +146,11 @@ public class ListFragment extends Fragment {
                 return true;
 
             case R.id.clearAll:
-                 clearAll="1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                 clearAll="1";
+                 taskslist.clear();
+                 doneList.clear();
+                 dbHelper.ClearList(list);
+                 viewPagerAdapter.notifyDataSetChanged();
 
                 return true;
             case R.id.delete:

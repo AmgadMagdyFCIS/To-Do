@@ -28,13 +28,6 @@
                     android:id="@+id/toolbar"
                     layout="@layout/toolbar" />
 
-                <Button
-                    android:id="@+id/search"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="end|right"
-                    android:background="@drawable/ic_baseline_search_24" />
-
 
             </com.google.android.material.appbar.AppBarLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -56,16 +49,6 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
 
-
-
-    <!--Write here Navigation View
-        and include navigation header and list_fragment_menu that will appear in the navigation drawer
-        ya anosoooooooo <3
-        -->
-
-    <!--don't forget to delete the button that hav id equal button <3
-        and delete that line android:layout_weight="10" in <include
-        -->
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
