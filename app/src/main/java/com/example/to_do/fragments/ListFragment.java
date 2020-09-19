@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +19,6 @@ import com.example.to_do.Database.SortByPriority;
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
-import com.example.to_do.activity.MainActivity;
 import com.example.to_do.viewpager.ViewPagerAdapter;
 import com.example.to_do.viewpager.ViewPagerItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,24 +26,22 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ListFragment extends Fragment {
 
 
-    String clearAll="0";
+    private static String listName;
+    String clearAll = "0";
     ViewPager viewPager;
     TabLayout tabs;
     FloatingActionButton fab;
     Toolbar toolbar;
+    ViewPagerAdapter viewPagerAdapter;
     private List<TaskItem> doneList;
     private List<TaskItem> taskslist;
     private ToDoDBHelper dbHelper;
-
-    private static String listName;
     private String list;
-    ViewPagerAdapter viewPagerAdapter;
 
     public ListFragment() {
         // Required empty public constructor
@@ -119,37 +115,40 @@ public class ListFragment extends Fragment {
             case R.id.sort:
 
 
-
                 return true;
             case R.id.sortByPriority:
 
-                Collections.sort(taskslist,new SortByPriority());
+                Collections.sort(taskslist, new SortByPriority());
 
                 return true;
             case R.id.sortAlphabetically:
-                Collections.sort(taskslist,new SortAlphabetically());
+                Collections.sort(taskslist, new SortAlphabetically());
 
 
                 return true;
             case R.id.sortByDate:
-                Collections.sort(taskslist,new SortByDate());
+                Collections.sort(taskslist, new SortByDate());
 
 
                 return true;
 
             case R.id.clearAll:
-                 clearAll="1";
-                 taskslist.clear();
-                 doneList.clear();
-                 dbHelper.ClearList(list);
-                getFragmentManager().beginTransaction().replace(R.id.container, new ListFragment()).commit();
+                if (taskslist.size() != 0 && doneList.size() != 0) {
+                    clearAll = "1";
+                    taskslist.clear();
+                    doneList.clear();
+                    dbHelper.ClearList(list);
+                    getFragmentManager().beginTransaction().replace(R.id.container, new ListFragment()).commit();
+                }
 
                 return true;
             case R.id.delete:
-                taskslist.clear();
-                doneList.clear();
-                dbHelper.DeleteList(list);
-                getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
+                if (clearAll == "0") {
+                    taskslist.clear();
+                    doneList.clear();
+                    dbHelper.DeleteList(list);
+                    getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
+                }
                 return true;
         }
         return false;

@@ -85,4 +85,9 @@ public class TasksFragment extends Fragment implements Click {
     public void onRecyclerViewClick(int pos) {
 
     }
+
+    @Override
+    public void onClick(int pos) {
+
+    }
 }
