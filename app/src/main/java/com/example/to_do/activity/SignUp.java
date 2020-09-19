@@ -33,7 +33,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         switch(view.getId())
         {
-            case R.id._sign_up_btn:
+            case R.id.sign_up_button:
             {
                 if(isDataValid())
                 {
@@ -57,11 +57,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     private void linkViews()
     {
-        FirstNameField = findViewById(R.id._first_name_field);
-        LastNameField = findViewById(R.id._last_name_field);
-        EmailField = findViewById(R.id._email_field_signup);
-        PasswordField = findViewById(R.id._password_field_signup);
-        SignUpBtn = findViewById(R.id._sign_up_btn);
+        FirstNameField = findViewById(R.id.first_name_edit_text);
+        LastNameField = findViewById(R.id.last_name_edit_text);
+        EmailField = findViewById(R.id.signup_email_edit_text);
+        PasswordField = findViewById(R.id.signup_password_edit_text);
+        SignUpBtn = findViewById(R.id.sign_up_button);
 
         FirstName = FirstNameField.getText().toString();
         LastName = LastNameField.getText().toString();

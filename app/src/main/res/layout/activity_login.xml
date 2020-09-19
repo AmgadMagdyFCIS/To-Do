@@ -21,7 +21,7 @@
         tools:layout_editor_absoluteY="28dp" />
 
     <EditText
-        android:id="@+id/_email_field_login"
+        android:id="@+id/login_email_edit_text"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -34,7 +34,7 @@
         tools:layout_editor_absoluteY="292dp" />
 
     <EditText
-        android:id="@+id/_password_field_login"
+        android:id="@+id/login_password_edit_text"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -46,7 +46,7 @@
         tools:layout_editor_absoluteY="355dp" />
 
     <Button
-        android:id="@+id/_sign_up_btn"
+        android:id="@+id/sign_in_button"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -60,7 +60,7 @@
         android:textColor="@color/colorPrimary2"/>
 
     <TextView
-        android:id="@+id/ForgetPasswordTxt"
+        android:id="@+id/forget_password_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -75,7 +75,7 @@
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/do_not_have"
+            android:id="@+id/do_not_have_an_account_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -84,7 +84,7 @@
             android:layout_marginRight="3dp" />
 
         <TextView
-            android:id="@+id/SignUpTxt"
+            android:id="@+id/sign_up_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

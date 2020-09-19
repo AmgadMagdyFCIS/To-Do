@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch(view.getId())
         {
-            case R.id._sign_up_btn:
+            case R.id.sign_in_button:
             {
                 if(isDataValid() && database.ValidateUserData(Email,Password))
                 {
@@ -51,11 +51,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
 
             }
-            case R.id.ForgetPasswordTxt:
+            case R.id.forget_password_text_view:
             {
                 break;
             }
-            case R.id.SignUpTxt:
+            case R.id.sign_up_text_view:
             {
                 Intent SignUp = new Intent(getApplicationContext(), com.example.to_do.activity.SignUp.class);
                 startActivity(SignUp);
@@ -70,11 +70,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private void linkViews()
     {
-        EmailField = findViewById(R.id._email_field_login);
-        PasswordField = findViewById(R.id._password_field_login);
-        SignUp = findViewById(R.id.SignUpTxt);
-        ForgetPassword = findViewById(R.id.ForgetPasswordTxt);
-        LoginBtn = findViewById(R.id._sign_up_btn);
+        EmailField = findViewById(R.id.login_email_edit_text);
+        PasswordField = findViewById(R.id.login_password_edit_text);
+        SignUp = findViewById(R.id.sign_up_text_view);
+        ForgetPassword = findViewById(R.id.forget_password_text_view);
+        LoginBtn = findViewById(R.id.sign_in_button);
 
         Email = EmailField.getText().toString();
         Password = PasswordField.getText().toString();
