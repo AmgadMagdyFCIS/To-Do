@@ -61,7 +61,7 @@ public class MainFragment extends Fragment implements Click {
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().add(R.id.container, new AddListFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, new AddListFragment()).commit();
             }
         });
 

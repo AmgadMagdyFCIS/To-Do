@@ -2,9 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="400dp"
-    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#ffffff"
     android:elevation="10dp"
     tools:context=".fragments.AddListFragment">
@@ -22,8 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="250dp"
             android:text="Create"
+            android:textColor="@color/colorAccent"
             android:textSize="24sp" />
 
         <TextView
@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="To-Do List"
+            android:textColor="@color/colorAccent"
             android:textSize="30sp" />
 
         <EditText
@@ -41,7 +42,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint='List Name: "Shopping"'
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,6 +57,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Cancel"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
 
             <TextView
@@ -64,6 +67,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Add list"
+                android:textColor="@color/colorAccent"
                 android:textSize="28sp" />
         </LinearLayout>
 

@@ -194,8 +194,10 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     }
 
     public void DeleteList(String name) {
+        ClearList(name);
         toDoDatabase = getWritableDatabase();
         toDoDatabase.delete("To_do_List", "name_of_list='" + name + "'", null);
+
 
     }
 
@@ -278,7 +280,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     public void ClearList(String listName) {
 
         toDoDatabase = getWritableDatabase();
-        toDoDatabase.delete("To_do_List", "name_of_list='" + listName + "'", null);
+        toDoDatabase.delete("To_do_Task", "name_of_list='" + listName + "'", null);
         ZeroTasks(listName);
 
 

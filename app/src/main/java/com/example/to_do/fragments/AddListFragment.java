@@ -45,7 +45,7 @@ public class AddListFragment extends Fragment {
             public void onClick(View view) {
                 ListItem l = new ListItem(name.getText().toString(),0);
                 toDoDBHelper.create_list(l);
-                getFragmentManager().beginTransaction().add(R.id.container, new MainFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
                 Toast.makeText(getContext()," Added "+name.getText().toString(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -53,8 +53,7 @@ public class AddListFragment extends Fragment {
         cancelNewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent Main = new Intent(getActivity(), MainActivity.class);
-                startActivity(Main);
+                getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
             }
         });
 

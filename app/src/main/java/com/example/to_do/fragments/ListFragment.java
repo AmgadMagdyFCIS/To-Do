@@ -77,10 +77,6 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
 
-        //view pager
-
-
-
         taskslist = new ArrayList<>();
         doneList = new ArrayList<>();
         dbHelper = new ToDoDBHelper(getActivity());
@@ -146,11 +142,14 @@ public class ListFragment extends Fragment {
                  taskslist.clear();
                  doneList.clear();
                  dbHelper.ClearList(list);
-                 viewPagerAdapter.notifyDataSetChanged();
+                getFragmentManager().beginTransaction().replace(R.id.container, new ListFragment()).commit();
 
                 return true;
             case R.id.delete:
-
+                taskslist.clear();
+                doneList.clear();
+                dbHelper.DeleteList(list);
+                getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
                 return true;
         }
         return false;

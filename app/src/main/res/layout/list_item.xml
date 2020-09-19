@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="TextView"
+                android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -33,6 +34,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="TextView"
+                android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
         </LinearLayout>
 

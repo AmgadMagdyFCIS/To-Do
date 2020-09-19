@@ -41,12 +41,7 @@
                 android:icon="@drawable/ic_baseline_delete_24"
                 android:title="@string/delete"
                 app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/theme"
 
-                android:icon="@drawable/ic_baseline_style_24"
-                android:title="@string/theme"
-                app:showAsAction="ifRoom" />
         </menu>
     </item>
 
