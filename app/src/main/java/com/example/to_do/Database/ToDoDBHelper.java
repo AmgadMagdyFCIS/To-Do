@@ -154,7 +154,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     public void FinishTask(String taskName) {
         Cursor cur = Fetchlistusingtask(taskName);
 
-        toDoDatabase = getReadableDatabase();
+        toDoDatabase = getWritableDatabase();
         ContentValues row = new ContentValues();
 
         row.put("name_of_task", cur.getString(0));
@@ -272,7 +272,9 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         toDoDatabase = getReadableDatabase();
         String[] arg = {tname};
         Cursor cur = toDoDatabase.rawQuery("Select * from To_do_Task where name_of_task like ?", arg);
-
+        if (cur != null) {
+            cur.moveToFirst();
+        }
         return cur;
     }
 

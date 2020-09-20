@@ -95,5 +95,6 @@ public class TasksFragment extends Fragment implements Click {
         dbHelper.FinishTask(taskItem.getName());
         recyclerViewItems.remove(pos);
         recyclerViewAdapter.notifyDataSetChanged();
+        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
     }
 }

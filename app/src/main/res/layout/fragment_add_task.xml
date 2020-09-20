@@ -8,31 +8,32 @@
     tools:context=".fragments.AddTaskFragment">
 
     <!-- Ramadan -->
-        <TextView
-            android:id="@+id/task_name_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="@string/what_do_you_want_to_do" />
+    <TextView
+        android:id="@+id/task_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="@string/what_do_you_want_to_do"
+        android:textColor="@color/colorAccent" />
 
-        <EditText
-            android:id="@+id/task_name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginBottom="20dp"
-            android:hint="@string/enter_the_task_here"
-            android:inputType="text" />
+    <EditText
+        android:id="@+id/task_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="@string/enter_the_task_here"
+        android:inputType="text"
+        android:textColor="@color/colorAccent" />
 
 
-
-
-        <TextView
-            android:id="@+id/task_date_time_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="@string/when" />
+    <TextView
+        android:id="@+id/task_date_time_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="@string/when"
+        android:textColor="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -45,55 +46,56 @@
                 android:id="@+id/task_date_edit_text"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="1"
                 android:ems="10"
                 android:focusableInTouchMode="false"
-                android:layout_weight="1"
-                android:layout_gravity="left"
                 android:hint="@string/date"
-                android:inputType="date" />
+                android:inputType="date"
+                android:textColor="@color/colorAccent" />
 
             <EditText
                 android:id="@+id/task_time_edit_text"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:ems="7"
-                android:layout_weight="1"
-                android:focusableInTouchMode="false"
-                android:layout_marginLeft="15dp"
                 android:layout_gravity="right"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:ems="7"
+                android:focusableInTouchMode="false"
                 android:hint="@string/time"
-                android:inputType="time" />
+                android:inputType="time"
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
 
 
+    <TextView
+        android:id="@+id/task_description_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="@string/how"
+        android:textColor="@color/colorAccent" />
+
+    <EditText
+        android:id="@+id/task_description_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="@string/description"
+        android:inputType="textImeMultiLine"
+        android:scrollbars="vertical"
+        android:textColor="@color/colorAccent" />
 
 
-
-        <TextView
-            android:id="@+id/task_description_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="@string/how" />
-
-        <EditText
-            android:id="@+id/task_description_edit_text"
-            android:ems="10"
-            android:hint="@string/description"
-            android:inputType="textImeMultiLine"
-            android:layout_marginBottom="20dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:scrollbars="vertical"/>
-
-
-
-        <TextView
-            android:id="@+id/task_priority_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="@string/priority" />
+    <TextView
+        android:id="@+id/task_priority_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="@string/priority"
+        android:textColor="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -123,7 +125,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:text="High"></RadioButton>
+                    android:text="High"
+                    android:textColor="@color/colorAccent"></RadioButton>
 
                 <RadioButton
                     android:id="@+id/task_priority_C"
@@ -131,7 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:text="Normal"></RadioButton>
+                    android:text="Normal"
+                    android:textColor="@color/colorAccent"></RadioButton>
 
                 <RadioButton
                     android:id="@+id/task_priority_D"
@@ -139,19 +143,19 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:text="Low"></RadioButton>
+                    android:text="Low"
+                    android:textColor="@color/colorAccent"></RadioButton>
             </RadioGroup>
         </LinearLayout>
 
 
-
-
-        <TextView
-            android:id="@+id/task_tag_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="@string/tag" />
+    <TextView
+        android:id="@+id/task_tag_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="@string/tag"
+        android:textColor="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
