@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -133,22 +134,30 @@ public class ListFragment extends Fragment {
                 return true;
 
             case R.id.clearAll:
-                if (taskslist.size() != 0 && doneList.size() != 0) {
+                if (taskslist.size() == 0 && doneList.size() == 0) {
+                    Toast.makeText(getActivity(),"no tasks in this list",Toast.LENGTH_SHORT).show();
+                }
+                else{
                     clearAll = "1";
                     taskslist.clear();
                     doneList.clear();
                     dbHelper.ClearList(list);
-                    getFragmentManager().beginTransaction().replace(R.id.container, new ListFragment()).commit();
+
+                    getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
+
                 }
 
                 return true;
             case R.id.delete:
-                if (clearAll == "0") {
+
                     taskslist.clear();
                     doneList.clear();
+
                     dbHelper.DeleteList(list);
+                    Toast.makeText(getActivity(),list+"is deleted",Toast.LENGTH_SHORT).show();
                     getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
-                }
+
+
                 return true;
         }
         return false;
