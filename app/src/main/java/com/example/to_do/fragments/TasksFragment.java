@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.TaskItem;
@@ -83,11 +84,16 @@ public class TasksFragment extends Fragment implements Click {
 
     @Override
     public void onRecyclerViewClick(int pos) {
-
+        TaskItem taskItem=recyclerViewItems.get(pos);
+        Toast.makeText(getActivity(),taskItem.getName(),Toast.LENGTH_SHORT).show();
+        /*Edit task*/
     }
 
     @Override
     public void onClick(int pos) {
-
+        TaskItem taskItem=recyclerViewItems.get(pos);
+        dbHelper.FinishTask(taskItem.getName());
+        recyclerViewItems.remove(pos);
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 }

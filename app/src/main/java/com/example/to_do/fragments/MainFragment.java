@@ -85,4 +85,9 @@ public class MainFragment extends Fragment implements Click {
         Toast.makeText(getActivity(),listItem.getName(),Toast.LENGTH_SHORT).show();
         getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(listItem.getName())).commit();
     }
+
+    @Override
+    public void onClick(int pos) {
+
+    }
 }

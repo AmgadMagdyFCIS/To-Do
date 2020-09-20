@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -74,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView listName, numberOfTasks;
-
+        ImageButton done;
         TextView taskName;
 
 
@@ -97,12 +98,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             } else {
                 taskName = itemView.findViewById(R.id.taskName);
+                done = itemView.findViewById(R.id.doneTask);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (getAdapterPosition() != -1) {
 
                             click.onRecyclerViewClick(getAdapterPosition());
+
+                        }
+                    }
+                });
+                done.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (getAdapterPosition() != -1) {
+                            done.setBackgroundResource(R.drawable.ic_baseline_check_box_24);
+                            click.onClick(getAdapterPosition());
 
                         }
                     }
