@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
@@ -31,16 +31,15 @@ import com.example.to_do.R;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddTaskFragment#} factory method to
- * create an instance of this fragment.
- */
+
 public class AddTaskFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+
+    private static String getTaskName;
+    private String taskName;
 
     private RadioGroup priorities;
     private RadioButton selectedPriority;
-    private EditText date, time , name , description;
+    private EditText date, time, name, description;
     private Spinner tags, duration; // lists
     private Button addTaskButton;
     private ImageButton addListButton;
@@ -48,8 +47,28 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     private DatePickerDialog datePicker;
     private TimePickerDialog timePicker;
 
-    private TaskItem newTaskItem;
+    private TaskItem newTaskItem, oldTaskItem;
 
+    public AddTaskFragment() {
+        // Required empty public constructor
+    }
+
+    public static AddTaskFragment newInstance(String param1) {
+        AddTaskFragment fragment = new AddTaskFragment();
+        Bundle args = new Bundle();
+        args.putString(getTaskName, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            taskName = getArguments().getString(getTaskName);
+
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +79,8 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
         database = new ToDoDBHelper(getActivity());
         newTaskItem = new TaskItem();
+
+        gitTask();
         linkViewesToCode(view);
         loadSpinnerData();
 
@@ -67,12 +88,23 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     }
 
 
+    public void gitTask() {
+
+        Cursor curs = database.fetchTask(taskName);
+        if (curs != null) {
+            while (!curs.isAfterLast()) {
+                oldTaskItem = new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6));
+                curs.moveToNext();
+            }
+        }
+    }
+
+
+
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
-            case R.id.task_date_edit_text:
-            {
+        switch (view.getId()) {
+            case R.id.task_date_edit_text: {
                 final Calendar calender = Calendar.getInstance();
                 int day = calender.get(Calendar.DAY_OF_MONTH);
                 int month = calender.get(Calendar.MONTH);
@@ -89,29 +121,27 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 datePicker.show();
                 break;
             }
-            case R.id.task_time_edit_text:
-            {
+            case R.id.task_time_edit_text: {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time.setText( selectedHour + ":" + selectedMinute);
+                        time.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, false);
                 timePicker.setTitle("Select Time");
                 timePicker.show();
                 break;
             }
-            case R.id.add_task_button:
-            {
+            case R.id.add_task_button: {
+                linkSelectedPriorityRdioBtnToCode(view);
                 AddTaskToDBBasedOnFilledFields();
                 getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(tags.getSelectedItem().toString())).commit();
                 break;
             }
-            case R.id.task_tags_add_button:
-            {
+            case R.id.task_tags_add_button: {
                 showAlertDialogToAddNewList();
                 break;
             }
@@ -122,15 +152,12 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (view.getId())
-        {
-            case R.id.task_tags_spinner:
-            {
+        switch (view.getId()) {
+            case R.id.task_tags_spinner: {
                 newTaskItem.setListName(tags.getSelectedItem().toString());
                 break;
             }
-            case R.id.task_repetead_spinner:
-            {
+            case R.id.task_repetead_spinner: {
                 newTaskItem.setReminder(duration.getSelectedItem().toString());
                 break;
             }
@@ -145,20 +172,62 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-    public void linkViewesToCode(View view)
-    {
+    public void linkViewesToCode(View view) {
         priorities = view.findViewById(R.id.task_priorities_radio_group);
         tags = view.findViewById(R.id.task_tags_spinner);
         duration = view.findViewById(R.id.task_repetead_spinner);
         date = view.findViewById(R.id.task_date_edit_text);
         time = view.findViewById(R.id.task_time_edit_text);
         name = view.findViewById(R.id.task_name_edit_text);
-        description= view.findViewById(R.id.task_description_edit_text);
-
+        description = view.findViewById(R.id.task_description_edit_text);
         addTaskButton = view.findViewById(R.id.add_task_button);
         addListButton = view.findViewById(R.id.task_tags_add_button);
 
-        linkSelectedPriorityRdioBtnToCode(view);
+
+        if (oldTaskItem != null) {
+
+            switch (oldTaskItem.getPriority()) {
+                case "Urgent":
+                    priorities.check(R.id.task_priority_A);
+                    break;
+                case "High":
+                    priorities.check(R.id.task_priority_B);
+                    break;
+                case "Normal":
+                    priorities.check(R.id.task_priority_C);
+                    break;
+                case "Low":
+                    priorities.check(R.id.task_priority_D);
+                    break;
+            }
+            switch (oldTaskItem.getReminder()) {
+                case "5 minutes":
+                    duration.setSelection(0);
+                    break;
+                case "10 minutes":
+                    duration.setSelection(1);
+                    break;
+                case "15 minutes":
+                    duration.setSelection(2);
+                    break;
+                case "30 minutes":
+                    duration.setSelection(3);
+                    break;
+                case "1 hour":
+                    duration.setSelection(4);
+                    break;
+                case "2 hours":
+                    duration.setSelection(5);
+                    break;
+            }
+
+            date.setText(oldTaskItem.getDate());
+            time.setText(oldTaskItem.getTime());
+            name.setText(oldTaskItem.getName());
+            description.setText(oldTaskItem.getDescription());
+
+
+        }
 
         addTaskButton.setOnClickListener(this);
         addListButton.setOnClickListener(this);
@@ -166,13 +235,13 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         duration.setOnItemSelectedListener(this);
         date.setOnClickListener(this);
         time.setOnClickListener(this);
+
     }
 
-    private void linkSelectedPriorityRdioBtnToCode(View view)
-    {
+    private void linkSelectedPriorityRdioBtnToCode(View view) {
+
         int selectedPriorityID = priorities.getCheckedRadioButtonId();
-        if(selectedPriorityID != -1)
-        {
+        if (selectedPriorityID != -1) {
             selectedPriority = view.findViewById(selectedPriorityID);
         }
     }
@@ -197,7 +266,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
             }
         });
 
-        builder.setNegativeButton("Cancel" , new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -212,7 +281,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         List<String> lists = database.getAllLists();
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, lists);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, lists);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -221,22 +290,31 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         tags.setAdapter(dataAdapter);
     }
 
-    private void AddTaskToDBBasedOnFilledFields()
-    {
+    private void AddTaskToDBBasedOnFilledFields() {
+
         checkEmptyFieldsWithToasts();
-        if(isAllFieldsAreFilled())
-        {
-            newTaskItem.setName(name.getText().toString());
-            newTaskItem.setPriority(selectedPriority.getText().toString());
-            newTaskItem.setDate(date.getText().toString());
-            newTaskItem.setTime(time.getText().toString());
-            newTaskItem.setDescription(description.getText().toString());
-            newTaskItem.setListName(tags.getSelectedItem().toString());
-            newTaskItem.setReminder(duration.getSelectedItem().toString());
-            database.create_Task(newTaskItem);
-        }
-        else if(isThreeRequiredFieldsAreFilled())
-        {
+        if (isAllFieldsAreFilled()) {
+            if (oldTaskItem == null) {
+                newTaskItem.setName(name.getText().toString());
+                newTaskItem.setPriority(selectedPriority.getText().toString());
+                newTaskItem.setDate(date.getText().toString());
+                newTaskItem.setTime(time.getText().toString());
+                newTaskItem.setDescription(description.getText().toString());
+                newTaskItem.setListName(tags.getSelectedItem().toString());
+                newTaskItem.setReminder(duration.getSelectedItem().toString());
+                database.create_Task(newTaskItem);
+            } else {
+                oldTaskItem.setName(name.getText().toString());
+                oldTaskItem.setPriority(selectedPriority.getText().toString());
+                oldTaskItem.setDate(date.getText().toString());
+                oldTaskItem.setTime(time.getText().toString());
+                oldTaskItem.setDescription(description.getText().toString());
+                oldTaskItem.setListName(tags.getSelectedItem().toString());
+                oldTaskItem.setReminder(duration.getSelectedItem().toString());
+                database.editTask(taskName,oldTaskItem);
+
+            }
+        } else if (isThreeRequiredFieldsAreFilled()) {
             newTaskItem.setName(name.getText().toString());
             newTaskItem.setPriority(selectedPriority.getText().toString());
 
@@ -244,39 +322,32 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
-    private void checkEmptyFieldsWithToasts()
-    {
-        if(name.getText().equals(""))
-        {
-            Toast.makeText(getActivity().getApplicationContext(),"Please enter task name!",Toast.LENGTH_LONG).show();
+    private void checkEmptyFieldsWithToasts() {
+        if (name.getText().equals("")) {
+            Toast.makeText(getActivity().getApplicationContext(), "Please enter task name!", Toast.LENGTH_LONG).show();
         }
-        if(selectedPriority.getText().equals(""))
-        {
-            Toast.makeText(getActivity().getApplicationContext(),"Please select task priority!",Toast.LENGTH_LONG).show();
+        if (selectedPriority.getText().equals("")) {
+            Toast.makeText(getActivity().getApplicationContext(), "Please select task priority!", Toast.LENGTH_LONG).show();
         }
-        if(tags.getSelectedItem().equals(""))
-        {
-            Toast.makeText(getActivity().getApplicationContext(),"Please select task list!",Toast.LENGTH_LONG).show();
+        if (tags.getSelectedItem().equals("")) {
+            Toast.makeText(getActivity().getApplicationContext(), "Please select task list!", Toast.LENGTH_LONG).show();
 
         }
-        if(duration.getSelectedItem().equals(""))
-        {
-            Toast.makeText(getActivity().getApplicationContext(),"Please select task ramainder!",Toast.LENGTH_LONG).show();
+        if (duration.getSelectedItem().equals("")) {
+            Toast.makeText(getActivity().getApplicationContext(), "Please select task ramainder!", Toast.LENGTH_LONG).show();
         }
     }
+
     private boolean isThreeRequiredFieldsAreFilled() // task name + list name + priority
     {
         return !name.getText().equals("") && !tags.getSelectedItem().equals("") && !selectedPriority.getText().equals("");
     }
 
-    private boolean isAllFieldsAreFilled()
-    {
+    private boolean isAllFieldsAreFilled() {
         return !name.getText().equals("") && !tags.getSelectedItem().equals("") && !selectedPriority.getText().equals("")
                 && !date.getText().equals("") && !time.getText().equals("") && !duration.getSelectedItem().equals("") &&
                 !description.getText().equals("");
     }
-
-
 
 
 }

@@ -3,8 +3,6 @@ package com.example.to_do.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,8 +17,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.to_do.R;
 import com.example.to_do.fragments.AddListFragment;
 import com.example.to_do.fragments.MainFragment;
-import com.example.to_do.fragments.SearchFragment;
-import com.google.android.material.internal.NavigationMenuItemView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             navigate(new MainFragment());
-            super.onBackPressed();
+
         }
     }
 

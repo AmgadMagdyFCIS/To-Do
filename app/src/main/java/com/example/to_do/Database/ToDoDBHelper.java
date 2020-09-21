@@ -152,7 +152,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     }
 
     public void FinishTask(String taskName) {
-        Cursor cur = Fetchlistusingtask(taskName);
+        Cursor cur = fetchTask(taskName);
 
         toDoDatabase = getWritableDatabase();
         ContentValues row = new ContentValues();
@@ -173,11 +173,30 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         toDoDatabase.update("To_do_Task", row, "name_of_task like ?", new String[]{cur.getString(0)});
 
     }
+    public void editTask(String name,TaskItem taskItem) {
+        Cursor cur = fetchTask(name);
+
+        toDoDatabase = getWritableDatabase();
+        ContentValues row = new ContentValues();
+
+        row.put("name_of_task", taskItem.getName());
+        row.put("name_of_list", taskItem.getListName());
+        row.put("Date", taskItem.getDate());
+        row.put("Time", taskItem.getTime());
+        row.put("Priority", taskItem.getPriority());
+        row.put("Description", taskItem.getDescription());
+        row.put("Reminder", taskItem.getReminder());
+        row.put("Done", taskItem.getDone());
+
+
+        toDoDatabase.update("To_do_Task", row, "name_of_task like ?", new String[]{cur.getString(0)});
+
+    }
 
 
     public void DeleteTask(String name) {
         toDoDatabase = getWritableDatabase();
-        Cursor cur = Fetchlistusingtask(name);
+        Cursor cur = fetchTask(name);
         decrease(cur.getString(1));
         toDoDatabase.delete("To_do_Task", "name_of_task='" + name + "'", null);
 
@@ -266,7 +285,8 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor Fetchlistusingtask(String tname) {
+
+    public Cursor fetchTask(String tname) {
         // Cursor cur = fetchAllLists();
         //cur.getInt()
         toDoDatabase = getReadableDatabase();

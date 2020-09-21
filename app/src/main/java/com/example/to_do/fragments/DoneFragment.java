@@ -89,6 +89,10 @@ public class DoneFragment extends Fragment implements Click {
 
     @Override
     public void onClick(int pos) {
-
+        TaskItem taskItem=recyclerViewItems.get(pos);
+        dbHelper.FinishTask(taskItem.getName());
+        recyclerViewItems.remove(pos);
+        recyclerViewAdapter.notifyDataSetChanged();
+        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
     }
 }

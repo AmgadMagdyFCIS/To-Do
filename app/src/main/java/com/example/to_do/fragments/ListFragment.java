@@ -93,7 +93,7 @@ public class ListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().add(R.id.container, new AddTaskFragment()).commit();
+                getFragmentManager().beginTransaction().add(R.id.container,  AddTaskFragment.newInstance("0000000004notask")).commit();
             }
         });
 
