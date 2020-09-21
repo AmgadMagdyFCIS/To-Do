@@ -38,7 +38,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     private String taskName;
 
     private RadioGroup priorities;
-    private RadioButton selectedPriority;
+    private RadioButton priorityA, priorityB, priorityC, priorityD;
     private EditText date, time, name, description;
     private Spinner tags, duration; // lists
     private Button addTaskButton;
@@ -46,6 +46,9 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     private ToDoDBHelper database;
     private DatePickerDialog datePicker;
     private TimePickerDialog timePicker;
+
+    private String priorityName = "";
+
 
     private TaskItem newTaskItem, oldTaskItem;
 
@@ -100,7 +103,6 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -136,8 +138,8 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 break;
             }
             case R.id.add_task_button: {
-                linkSelectedPriorityRdioBtnToCode(view);
-                AddTaskToDBBasedOnFilledFields();
+
+                AddTaskToDBBasedOnFilledFields(view);
                 getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(tags.getSelectedItem().toString())).commit();
                 break;
             }
@@ -182,6 +184,11 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         description = view.findViewById(R.id.task_description_edit_text);
         addTaskButton = view.findViewById(R.id.add_task_button);
         addListButton = view.findViewById(R.id.task_tags_add_button);
+        priorityA = view.findViewById(R.id.task_priority_A);
+        priorityB = view.findViewById(R.id.task_priority_B);
+        priorityC = view.findViewById(R.id.task_priority_C);
+        priorityD = view.findViewById(R.id.task_priority_D);
+
 
 
         if (oldTaskItem != null) {
@@ -235,14 +242,26 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         duration.setOnItemSelectedListener(this);
         date.setOnClickListener(this);
         time.setOnClickListener(this);
+        //linkSelectedPriorityRdioBtnToCode(view);
 
     }
 
     private void linkSelectedPriorityRdioBtnToCode(View view) {
-
-        int selectedPriorityID = priorities.getCheckedRadioButtonId();
-        if (selectedPriorityID != -1) {
-            selectedPriority = view.findViewById(selectedPriorityID);
+        if(priorityA.isChecked())
+        {
+            priorityName=priorityA.getText().toString();
+        }
+        else if(priorityB.isChecked())
+        {
+            priorityName=priorityB.getText().toString();
+        }
+        else if(priorityC.isChecked())
+        {
+            priorityName=priorityC.getText().toString();
+        }
+        else if(priorityD.isChecked())
+        {
+            priorityName=priorityD.getText().toString();
         }
     }
 
@@ -290,13 +309,14 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         tags.setAdapter(dataAdapter);
     }
 
-    private void AddTaskToDBBasedOnFilledFields() {
+    private void AddTaskToDBBasedOnFilledFields(View view) {
+        linkSelectedPriorityRdioBtnToCode(view);
 
         checkEmptyFieldsWithToasts();
         if (isAllFieldsAreFilled()) {
             if (oldTaskItem == null) {
                 newTaskItem.setName(name.getText().toString());
-                newTaskItem.setPriority(selectedPriority.getText().toString());
+                newTaskItem.setPriority(priorityName);
                 newTaskItem.setDate(date.getText().toString());
                 newTaskItem.setTime(time.getText().toString());
                 newTaskItem.setDescription(description.getText().toString());
@@ -305,18 +325,18 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 database.create_Task(newTaskItem);
             } else {
                 oldTaskItem.setName(name.getText().toString());
-                oldTaskItem.setPriority(selectedPriority.getText().toString());
+                oldTaskItem.setPriority(priorityName);
                 oldTaskItem.setDate(date.getText().toString());
                 oldTaskItem.setTime(time.getText().toString());
                 oldTaskItem.setDescription(description.getText().toString());
                 oldTaskItem.setListName(tags.getSelectedItem().toString());
                 oldTaskItem.setReminder(duration.getSelectedItem().toString());
-                database.editTask(taskName,oldTaskItem);
+                database.editTask(taskName, oldTaskItem);
 
             }
         } else if (isThreeRequiredFieldsAreFilled()) {
             newTaskItem.setName(name.getText().toString());
-            newTaskItem.setPriority(selectedPriority.getText().toString());
+            newTaskItem.setPriority(priorityName);
 
             database.create_Task_with_Name_only(newTaskItem);
         }
@@ -326,7 +346,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         if (name.getText().equals("")) {
             Toast.makeText(getActivity().getApplicationContext(), "Please enter task name!", Toast.LENGTH_LONG).show();
         }
-        if (selectedPriority.getText().equals("")) {
+        if (priorityName.equals("")) {
             Toast.makeText(getActivity().getApplicationContext(), "Please select task priority!", Toast.LENGTH_LONG).show();
         }
         if (tags.getSelectedItem().equals("")) {
@@ -340,11 +360,11 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
     private boolean isThreeRequiredFieldsAreFilled() // task name + list name + priority
     {
-        return !name.getText().equals("") && !tags.getSelectedItem().equals("") && !selectedPriority.getText().equals("");
+        return !name.getText().equals("") && !tags.getSelectedItem().equals("") && !priorityName.equals("");
     }
 
     private boolean isAllFieldsAreFilled() {
-        return !name.getText().equals("") && !tags.getSelectedItem().equals("") && !selectedPriority.getText().equals("")
+        return !name.getText().equals("") && !tags.getSelectedItem().equals("") && !priorityName.equals("")
                 && !date.getText().equals("") && !time.getText().equals("") && !duration.getSelectedItem().equals("") &&
                 !description.getText().equals("");
     }
