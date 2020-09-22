@@ -14,9 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="2.5dp"
         android:backgroundTint="#ffffff"
-
         app:cardBackgroundColor="#000000"
-        app:cardCornerRadius="150dp">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +47,7 @@
                     android:gravity="start|center_vertical"
                     android:text="TextView"
                     android:textColor="#2B2A2A"
-                    android:textSize="14sp" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
@@ -66,7 +65,7 @@
                     android:gravity="center"
                     android:text="TextView"
                     android:textColor="#2B2A2A"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textView2"
