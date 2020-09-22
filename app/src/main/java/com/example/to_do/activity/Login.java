@@ -15,6 +15,7 @@ import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
+    public static String mainEmail;
     EditText EmailField, PasswordField;
     TextView SignUp, ForgetPassword;
     Button LoginBtn;
@@ -39,6 +40,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 getDataFromEditTexts();
                 if(isDataValid() && database.ValidateUserData(Email,Password))
                 {
+                    mainEmail=Email;
                     Intent Main = new Intent(Login.this,MainActivity.class);
                     startActivity(Main);
                 }
