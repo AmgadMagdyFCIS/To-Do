@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FFFF00</color>
-    <color name="colorPrimaryDark">#FFB700</color>
+    <color name="colorPrimaryDark">#FFFF00</color>
     <color name="colorAccent">#000000</color>
+    <color name="grey">#D6D6D6</color>
 
-
+    <color name="MiddleBlue">#92DCE5</color>
+    <color name="Habddddddd">#2B303A</color>
+    <color name="yellow">#ffee32</color>
     <color name="login">#1a1c20</color>
     <color name="logintxt">#f0a500</color>
     <color name = "colorPrimary2">#f4f4f4 </color>

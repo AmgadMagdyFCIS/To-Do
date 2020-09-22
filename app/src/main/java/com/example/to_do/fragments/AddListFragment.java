@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,8 @@ import com.example.to_do.activity.MainActivity;
 public class AddListFragment extends Fragment {
 
     private ToDoDBHelper toDoDBHelper;
-    private TextView create,toDo,addNewList,cancelNewList;
+    private Button addNewList,cancelNewList;
+    TextView create;
     private EditText name;
 
     @Nullable
@@ -31,7 +33,6 @@ public class AddListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_list, container, false);
         create = view.findViewById(R.id.Create);
-        toDo = view.findViewById(R.id.to_do);
 
         name = view.findViewById(R.id.new_list_name);
 

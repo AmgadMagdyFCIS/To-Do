@@ -24,7 +24,7 @@
         android:ems="10"
         android:hint="@string/enter_the_task_here"
         android:inputType="text"
-        android:textColor="@color/colorAccent" />
+        />
 
 
     <TextView
