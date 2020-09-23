@@ -34,7 +34,8 @@ import java.util.List;
 
 public class AddTaskFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private static String getTaskName ,getListName;
+    private static final String getTaskName ="taskName";
+    private static final String getListName ="ListName";
     private String taskName ,listName;
 
     private RadioGroup priorities;
