@@ -34,8 +34,8 @@ import java.util.List;
 
 public class AddTaskFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private static String getTaskName;
-    private String taskName;
+    private static String getTaskName ,getListName;
+    private String taskName ,listName;
 
     private RadioGroup priorities;
     private RadioButton priorityA, priorityB, priorityC, priorityD;
@@ -56,10 +56,11 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         // Required empty public constructor
     }
 
-    public static AddTaskFragment newInstance(String param1) {
+    public static AddTaskFragment newInstance(String param1,String param2) {
         AddTaskFragment fragment = new AddTaskFragment();
         Bundle args = new Bundle();
         args.putString(getTaskName, param1);
+        args.putString(getListName, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,6 +70,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             taskName = getArguments().getString(getTaskName);
+            listName = getArguments().getString(getListName);
 
         }
     }
@@ -242,7 +244,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         duration.setOnItemSelectedListener(this);
         date.setOnClickListener(this);
         time.setOnClickListener(this);
-        //linkSelectedPriorityRdioBtnToCode(view);
+
 
     }
 
@@ -307,6 +309,13 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
         // attaching data adapter to spinner
         tags.setAdapter(dataAdapter);
+        for (int i=0;i<tags.getCount();i++)
+        {
+            if(tags.getItemAtPosition(i).toString().equals(listName))
+            {
+                tags.setSelection(i);
+            }
+        }
     }
 
     private void AddTaskToDBBasedOnFilledFields(View view) {

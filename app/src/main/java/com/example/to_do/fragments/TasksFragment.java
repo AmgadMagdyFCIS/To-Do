@@ -86,7 +86,7 @@ public class TasksFragment extends Fragment implements Click {
     public void onRecyclerViewClick(int pos) {
         TaskItem taskItem=recyclerViewItems.get(pos);
         Toast.makeText(getActivity(),taskItem.getName(),Toast.LENGTH_SHORT).show();
-        getFragmentManager().beginTransaction().replace(R.id.container, AddTaskFragment.newInstance(taskItem.getName())).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, AddTaskFragment.newInstance(taskItem.getName(),list)).commit();
     }
 
     @Override

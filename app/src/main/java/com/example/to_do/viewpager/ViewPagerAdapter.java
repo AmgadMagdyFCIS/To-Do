@@ -15,6 +15,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         this.viewPagerItems = viewPagerItems;
     }
 
+
+
     @NonNull
     @Override
     public Fragment getItem(int position) {

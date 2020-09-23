@@ -44,6 +44,7 @@ public class ListFragment extends Fragment {
     private ToDoDBHelper dbHelper;
     private String list;
 
+
     public ListFragment() {
         // Required empty public constructor
     }
@@ -93,7 +94,7 @@ public class ListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().add(R.id.container,  AddTaskFragment.newInstance("0000000004notask")).commit();
+                getFragmentManager().beginTransaction().add(R.id.container,  AddTaskFragment.newInstance("0000000004notask",list)).commit();
             }
         });
 
@@ -120,16 +121,51 @@ public class ListFragment extends Fragment {
             case R.id.sortByPriority:
 
                 Collections.sort(taskslist, new SortByPriority());
+                Collections.sort(doneList, new SortByPriority());
+                dbHelper.ClearList(list);
+                for (int i =0;i<taskslist.size();i++)
+                {
+                        dbHelper.create_Task(taskslist.get(i));
+                }
+                for (int i =0;i<doneList.size();i++)
+                {
+                    dbHelper.create_Task(taskslist.get(i));
+                }
+                getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
+
+
 
                 return true;
             case R.id.sortAlphabetically:
                 Collections.sort(taskslist, new SortAlphabetically());
+                Collections.sort(doneList, new SortAlphabetically());
+                dbHelper.ClearList(list);
+                for (int i =0;i<taskslist.size();i++)
+                {
+                    dbHelper.create_Task(taskslist.get(i));
+                }
+                for (int i =0;i<doneList.size();i++)
+                {
+                    dbHelper.create_Task(taskslist.get(i));
+                }
+                getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
+
 
 
                 return true;
             case R.id.sortByDate:
                 Collections.sort(taskslist, new SortByDate());
-
+                Collections.sort(doneList, new SortByDate());
+                dbHelper.ClearList(list);
+                for (int i =0;i<taskslist.size();i++)
+                {
+                    dbHelper.create_Task(taskslist.get(i));
+                }
+                for (int i =0;i<doneList.size();i++)
+                {
+                    dbHelper.create_Task(taskslist.get(i));
+                }
+                getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
 
                 return true;
 
@@ -138,7 +174,7 @@ public class ListFragment extends Fragment {
                     Toast.makeText(getActivity(),"no tasks in this list",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    clearAll = "1";
+                   // clearAll = "1";
                     taskslist.clear();
                     doneList.clear();
                     dbHelper.ClearList(list);

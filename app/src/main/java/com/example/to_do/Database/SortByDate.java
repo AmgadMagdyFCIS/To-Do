@@ -8,21 +8,24 @@ public class SortByDate implements Comparator<TaskItem> {
 
     // Used for sorting in ascending order of
     // roll number
-    public int compare(TaskItem a, TaskItem b)
-    {
 
+    @Override
+    public int compare(TaskItem taskItem, TaskItem t1) {
         Date date1= null;
         try {
-            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(a.getDate());
+            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(taskItem.getDate());
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Date date2 = null;
         try {
-            date2 = new SimpleDateFormat("dd/MM/yyyy").parse(b.getDate());
+            date2 = new SimpleDateFormat("dd/MM/yyyy").parse(t1.getDate());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return (int) (date1.getTime() - date2.getTime());
+        return (int) (date1.compareTo(date2));
+
     }
+
+
 }

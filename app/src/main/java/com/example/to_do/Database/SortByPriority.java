@@ -6,8 +6,9 @@ public class SortByPriority implements Comparator<TaskItem>
 {
     // Used for sorting in ascending order of
     // roll number
-    public int compare(TaskItem a, TaskItem b)
-    {
-        return (a.getPriority().charAt(0) - b.getPriority().charAt(0));
+
+    @Override
+    public int compare(TaskItem taskItem, TaskItem t1) {
+        return (taskItem.getPriorityDegree().compareTo(t1.getPriorityDegree()));
     }
 }

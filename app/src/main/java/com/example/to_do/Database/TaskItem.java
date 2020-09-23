@@ -1,7 +1,8 @@
 package com.example.to_do.Database;
 
 public class TaskItem {
-    private  String name,listName,date,time,priority,description,reminder;
+    private  String name,listName,date,time,priority,description,reminder,priorityDegree;
+
 
     private  int done=0;
 
@@ -11,6 +12,21 @@ public class TaskItem {
         this.date = date;
         this.time = time;
         this.priority = priority;
+        switch (priority)
+        {
+            case"Urgent":
+                priorityDegree="0";
+                break;
+            case "High":
+                priorityDegree="1";
+                break;
+            case "Normal":
+                priorityDegree="2";
+                break;
+            case "Low":
+                priorityDegree="3";
+                break;
+        }
         this.description = description;
         this.reminder = reminder;
 
@@ -86,5 +102,13 @@ public class TaskItem {
 
     public void setDone(Integer done) {
         this.done = done;
+    }
+
+    public String getPriorityDegree() {
+        return priorityDegree;
+    }
+
+    public void setPriorityDegree(String priorityDegree) {
+        this.priorityDegree = priorityDegree;
     }
 }
