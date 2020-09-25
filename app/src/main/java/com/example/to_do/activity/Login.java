@@ -56,6 +56,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
             case R.id.forget_password_text_view:
             {
+                Intent recover = new Intent(getApplicationContext(), com.example.to_do.activity.Recover_Password.class);
+                startActivity(recover);
                 break;
             }
             case R.id.sign_up_text_view:
