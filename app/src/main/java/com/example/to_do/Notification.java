@@ -3,27 +3,31 @@ package com.example.to_do;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 
-public class Notification extends Application {
-    public static final String channelID="channel1";
+import static com.example.to_do.UI.fragments.AddTaskFragment.NOTIFICATION_CHANNEL_ID;
+
+public class Notification extends BroadcastReceiver {
+    public static String NOTIFICATION_ID = "notification-id";
+    public static String NOTIFICATION = "notification";
     @Override
-    public void onCreate() {
-        super.onCreate();
-        creatNotificationChannel();
-    }
-    public void creatNotificationChannel()
-    {
-        if(Build.VERSION.SDK_INT==Build.VERSION_CODES.O)
-        {
-            NotificationChannel channel1=new NotificationChannel(channelID,"channel1", NotificationManager.IMPORTANCE_HIGH);
-            channel1.setDescription("test");
-            NotificationManager manager=getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel1);
+    public void onReceive(Context context, Intent intent) {
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        android.app.Notification notification = intent.getParcelableExtra(NOTIFICATION);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(notificationChannel);
         }
-
-
-
+        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+        assert notificationManager != null;
+        notificationManager.notify(id, notification);
 
     }
 }

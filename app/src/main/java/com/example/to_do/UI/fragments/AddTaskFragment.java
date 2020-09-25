@@ -1,11 +1,18 @@
 package com.example.to_do.UI.fragments;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.to_do.Database.ListItem;
@@ -33,7 +41,8 @@ import java.util.List;
 
 
 public class AddTaskFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+    private final static String default_notification_channel_id = "default";
     private static final String getTaskName ="taskName";
     private static final String getListName ="ListName";
     private String taskName ,listName;
@@ -47,7 +56,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     private ToDoDBHelper database;
     private DatePickerDialog datePicker;
     private TimePickerDialog timePicker;
-
+    private int Hour,Minute,Day,Month,Year;
     private String priorityName = "";
 
 
@@ -108,18 +117,22 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.task_date_edit_text: {
-                final Calendar calender = Calendar.getInstance();
-                int day = calender.get(Calendar.DAY_OF_MONTH);
-                int month = calender.get(Calendar.MONTH);
-                int year = calender.get(Calendar.YEAR);
+                final Calendar now = Calendar.getInstance();
+                int day = now.get(Calendar.DAY_OF_MONTH);
+                int month = now.get(Calendar.MONTH);
+                int year = now.get(Calendar.YEAR);
 
                 datePicker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                Day = dayOfMonth;
+                                Month = monthOfYear;
+                                Year = year;
                             }
                         }, year, month, day);
                 datePicker.setTitle("Select Date");
@@ -134,6 +147,8 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         time.setText(selectedHour + ":" + selectedMinute);
+                        Hour = selectedHour;
+                        Minute = selectedMinute;
                     }
                 }, hour, minute, false);
                 timePicker.setTitle("Select Time");
@@ -143,7 +158,23 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
             case R.id.add_task_button: {
 
                 AddTaskToDBBasedOnFilledFields(view);
-                getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(tags.getSelectedItem().toString())).commit();
+                Calendar current = Calendar.getInstance();
+                Calendar cal = Calendar.getInstance();
+                cal.set(Year,
+                        Month,
+                        Day,
+                        Hour,
+                        Minute,
+                        00);
+
+                if(cal.compareTo(current) <= 0){
+                    //The set Date/Time already passed
+                    Toast.makeText(getContext(), "Invalid Date/Time", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    scheduleNotification(getNotification(),cal,duration.getSelectedItem().toString());
+                    getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(tags.getSelectedItem().toString())).commit();
+                }
                 break;
             }
             case R.id.task_tags_add_button: {
@@ -223,7 +254,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 case "30 minutes":
                     duration.setSelection(3);
                     break;
-                case "1 hour":
+                case "1 hours":
                     duration.setSelection(4);
                     break;
                 case "2 hours":
@@ -378,6 +409,52 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 && !date.getText().equals("") && !time.getText().equals("") && !duration.getSelectedItem().equals("") &&
                 !description.getText().equals("");
     }
+
+    private void scheduleNotification(Notification notification, Calendar cal,String interval) {
+
+        Intent notificationIntent = new Intent(getContext(), com.example.to_do.Notification.class);
+        notificationIntent.putExtra(com.example.to_do.Notification.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(com.example.to_do.Notification.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        long timeBeforeNotification = 0;
+        switch (interval)
+        {
+            case "5 minutes":
+                timeBeforeNotification = 5 * 60000;
+                break;
+            case "10 minutes":
+                timeBeforeNotification = 10 * 60000;
+                break;
+            case "15 minutes":
+                timeBeforeNotification = 15 * 60000;
+                break;
+            case "30 minutes":
+                timeBeforeNotification = 30 * 60000;
+                break;
+            case "1 hours":
+                timeBeforeNotification = 60 * 60000;
+                break;
+            case "2 hours":
+                timeBeforeNotification = 2 * 60 * 60000;
+                break;
+            default:
+                break;
+        }
+
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis() - timeBeforeNotification, pendingIntent);
+    }
+
+    private Notification getNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder( getContext(), default_notification_channel_id ) ;
+        builder.setContentTitle(name.getText().toString()) ;
+        builder.setContentText(description.getText().toString()) ;
+        builder.setSmallIcon(R.drawable.logo);
+        builder.setAutoCancel(true) ;
+        builder.setChannelId(NOTIFICATION_CHANNEL_ID);
+        return builder.build() ;
+    }
+
 
 
 }
