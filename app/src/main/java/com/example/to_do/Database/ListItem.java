@@ -12,7 +12,7 @@ public class ListItem {
 
     public ListItem(String name_of_list) {
         this.name = name_of_list;
-    }
+    }  // constructor
 
     public String getName() {
         return name;

@@ -283,7 +283,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 // send data from the AlertDialog to the Activity
                 EditText editText = customLayout.findViewById(R.id.tag_name_edit_text);
                 ListItem list = new ListItem(editText.getText().toString());
-                database.create_list_with_name_only(list);
+                database.create_list(list);
                 loadSpinnerData();
             }
         });
@@ -348,7 +348,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
             newTaskItem.setName(name.getText().toString());
             newTaskItem.setPriority(priorityName);
 
-            database.create_Task_with_Name_only(newTaskItem);
+            database.create_Task(newTaskItem);
         }
     }
 
