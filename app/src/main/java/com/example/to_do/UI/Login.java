@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             case R.id.sign_in_button:
             {
                 getDataFromEditTexts();
-                if(isDataValid() && database.ValidateUserData(Email,Password))
+                if(isDataValid() && database.isEmailFound(Email) && database.isPasswordFound(Password))
                 {
                     mainEmail=Email;
                     Intent Main = new Intent(Login.this,MainActivity.class);
