@@ -1,4 +1,4 @@
-package com.example.to_do.fragments;
+package com.example.to_do.UI.fragments;
 
 import android.os.Bundle;
 
@@ -10,23 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
-import com.example.to_do.Recyclers.Click;
-import com.example.to_do.Recyclers.RecyclerViewAdapter;
+import com.example.to_do.RecyclerView.Click;
+import com.example.to_do.RecyclerView.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DoneFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DoneFragment extends Fragment implements Click {
 
+public class TasksFragment extends Fragment implements Click {
 
     private static String listName ,clearAll;
     private String list ,clear;
@@ -36,15 +32,15 @@ public class DoneFragment extends Fragment implements Click {
     private RecyclerViewAdapter recyclerViewAdapter;
     private ToDoDBHelper dbHelper;
 
-    public DoneFragment() {
+    public TasksFragment() {
         // Required empty public constructor
     }
 
-    public static DoneFragment newInstance(String param1/*, String param2*/) {
-        DoneFragment fragment = new DoneFragment();
+    public static TasksFragment newInstance(String param1/*, String param2*/) {
+        TasksFragment fragment = new TasksFragment();
         Bundle args = new Bundle();
         args.putString(listName, param1);
-        //args.putString(clearAll, param2);
+       // args.putString(clearAll, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,32 +55,37 @@ public class DoneFragment extends Fragment implements Click {
             //clear = getArguments().getString(clearAll);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_done, container, false);
+        View view = inflater.inflate(R.layout.fragment_tasks, container, false);
+
         recyclerViewItems = new ArrayList<>();
 
-        recyclerView = view.findViewById(R.id.doneLists);
+        recyclerView = view.findViewById(R.id.tasksList);
 
         //db
         dbHelper= new ToDoDBHelper(getActivity());
-        recyclerViewItems=dbHelper.ReturnTasksOfSpecificList(list,1);
+        recyclerViewItems=dbHelper.ReturnTasksOfSpecificList(list,0);
 
 
 
         //recycler view adapter
-        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems,this);
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems , this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(recyclerViewAdapter);
+
         return view;
     }
 
     @Override
     public void onRecyclerViewClick(int pos) {
-
+        TaskItem taskItem=recyclerViewItems.get(pos);
+        Toast.makeText(getActivity(),taskItem.getName(),Toast.LENGTH_SHORT).show();
+        getFragmentManager().beginTransaction().replace(R.id.container, AddTaskFragment.newInstance(taskItem.getName(),list)).commit();
     }
 
     @Override

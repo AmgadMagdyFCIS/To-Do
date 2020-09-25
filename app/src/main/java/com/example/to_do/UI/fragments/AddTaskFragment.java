@@ -1,4 +1,4 @@
-package com.example.to_do.fragments;
+package com.example.to_do.UI.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;

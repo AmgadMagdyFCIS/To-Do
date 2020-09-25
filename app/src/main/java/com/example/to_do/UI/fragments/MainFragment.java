@@ -1,13 +1,10 @@
-package com.example.to_do.fragments;
+package com.example.to_do.UI.fragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,8 +16,8 @@ import android.widget.Toast;
 import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
-import com.example.to_do.Recyclers.Click;
-import com.example.to_do.Recyclers.RecyclerViewAdapter;
+import com.example.to_do.RecyclerView.Click;
+import com.example.to_do.RecyclerView.RecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
