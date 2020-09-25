@@ -1,4 +1,4 @@
-package com.example.to_do.Recyclers;
+package com.example.to_do.RecyclerView;
 
 public interface Click {
     void onRecyclerViewClick(int pos);

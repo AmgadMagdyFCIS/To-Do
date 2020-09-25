@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:elevation="10dp"
-    tools:context=".fragments.AddListFragment">
+    tools:context=".UI.fragments.AddListFragment">
 
 
 

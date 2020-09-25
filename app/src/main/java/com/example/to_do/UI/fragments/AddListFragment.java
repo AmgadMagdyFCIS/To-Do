@@ -1,6 +1,5 @@
-package com.example.to_do.fragments;
+package com.example.to_do.UI.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.example.to_do.Database.ListItem;
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
-import com.example.to_do.activity.MainActivity;
 
 
 public class AddListFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.example.to_do.activity;
+package com.example.to_do.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.to_do.Database.ToDoDBHelper;
 import com.example.to_do.R;
@@ -60,7 +59,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
             case R.id.sign_up_text_view:
             {
-                Intent SignUp = new Intent(getApplicationContext(), com.example.to_do.activity.SignUp.class);
+                Intent SignUp = new Intent(getApplicationContext(), com.example.to_do.UI.SignUp.class);
                 startActivity(SignUp);
                 break;
             }

@@ -1,4 +1,4 @@
-package com.example.to_do.activity;
+package com.example.to_do.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.to_do.R;
-import com.example.to_do.fragments.AddListFragment;
-import com.example.to_do.fragments.MainFragment;
+import com.example.to_do.UI.fragments.AddListFragment;
+import com.example.to_do.UI.fragments.MainFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
