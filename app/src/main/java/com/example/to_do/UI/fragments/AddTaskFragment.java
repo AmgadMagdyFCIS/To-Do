@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +41,9 @@ import java.util.List;
 public class AddTaskFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private final static String default_notification_channel_id = "default";
-    private static final String getTaskName ="taskName";
-    private static final String getListName ="ListName";
-    private String taskName ,listName;
+    private static final String getTaskName = "taskName";
+    private static final String getListName = "ListName";
+    private String taskName, listName;
 
     private RadioGroup priorities;
     private RadioButton priorityA, priorityB, priorityC, priorityD;
@@ -56,7 +54,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     private ToDoDBHelper database;
     private DatePickerDialog datePicker;
     private TimePickerDialog timePicker;
-    private int Hour,Minute,Day,Month,Year;
+    private int Hour, Minute, Day, Month, Year;
     private String priorityName = "";
 
 
@@ -66,7 +64,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         // Required empty public constructor
     }
 
-    public static AddTaskFragment newInstance(String param1,String param2) {
+    public static AddTaskFragment newInstance(String param1, String param2) {
         AddTaskFragment fragment = new AddTaskFragment();
         Bundle args = new Bundle();
         args.putString(getTaskName, param1);
@@ -117,13 +115,14 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onClick(View view) {
-
+        int year, day, month;
         switch (view.getId()) {
             case R.id.task_date_edit_text: {
                 final Calendar now = Calendar.getInstance();
-                int day = now.get(Calendar.DAY_OF_MONTH);
-                int month = now.get(Calendar.MONTH);
-                int year = now.get(Calendar.YEAR);
+
+                day = now.get(Calendar.DAY_OF_MONTH);
+                month = now.get(Calendar.MONTH);
+                year = now.get(Calendar.YEAR);
 
                 datePicker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
@@ -156,24 +155,54 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 break;
             }
             case R.id.add_task_button: {
-
                 AddTaskToDBBasedOnFilledFields(view);
-                Calendar current = Calendar.getInstance();
-                Calendar cal = Calendar.getInstance();
-                cal.set(Year,
-                        Month,
-                        Day,
-                        Hour,
-                        Minute,
-                        00);
+                if (oldTaskItem != null) {
+                    String Date = oldTaskItem.getDate().toString();
+                    String[] date = Date.split("/");
+                    String Time = oldTaskItem.getTime().toString();
+                    String[] time = Time.split(":");
+                    System.out.println(date[0] + " " + date[1] + " " + date[2] + " " + time[0] + " " + time[1]);
 
-                if(cal.compareTo(current) <= 0){
-                    //The set Date/Time already passed
-                    Toast.makeText(getContext(), "Invalid Date/Time", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    scheduleNotification(getNotification(),cal,duration.getSelectedItem().toString());
-                    getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(tags.getSelectedItem().toString())).commit();
+                    Year = Integer.valueOf(date[2]);
+                    Month = Integer.valueOf(date[1]);
+                    Day = Integer.valueOf(date[0]);
+
+                    Hour = Integer.valueOf(time[0]);
+                    Minute = Integer.valueOf(time[1]);
+
+                    Calendar current = Calendar.getInstance();
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Year,
+                            Month,
+                            Day,
+                            Hour,
+                            Minute,
+                            00);
+
+                    if (cal.compareTo(current) <= 0) {
+//The set Date/Time already passed
+                        Toast.makeText(getContext(), "Invalid Date/Time", Toast.LENGTH_LONG).show();
+                    } else {
+                        scheduleNotification(getNotification(), cal, duration.getSelectedItem().toString());
+                        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(tags.getSelectedItem().toString())).commit();
+                    }
+                } else {
+                    Calendar current = Calendar.getInstance();
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Year,
+                            Month,
+                            Day,
+                            Hour,
+                            Minute,
+                            00);
+
+                    if (cal.compareTo(current) <= 0) {
+//The set Date/Time already passed
+                        Toast.makeText(getContext(), "Invalid Date/Time", Toast.LENGTH_LONG).show();
+                    } else {
+                        scheduleNotification(getNotification(), cal, duration.getSelectedItem().toString());
+                        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(tags.getSelectedItem().toString())).commit();
+                    }
                 }
                 break;
             }
@@ -222,7 +251,6 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         priorityB = view.findViewById(R.id.task_priority_B);
         priorityC = view.findViewById(R.id.task_priority_C);
         priorityD = view.findViewById(R.id.task_priority_D);
-
 
 
         if (oldTaskItem != null) {
@@ -281,21 +309,14 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
     }
 
     private void linkSelectedPriorityRdioBtnToCode(View view) {
-        if(priorityA.isChecked())
-        {
-            priorityName=priorityA.getText().toString();
-        }
-        else if(priorityB.isChecked())
-        {
-            priorityName=priorityB.getText().toString();
-        }
-        else if(priorityC.isChecked())
-        {
-            priorityName=priorityC.getText().toString();
-        }
-        else if(priorityD.isChecked())
-        {
-            priorityName=priorityD.getText().toString();
+        if (priorityA.isChecked()) {
+            priorityName = priorityA.getText().toString();
+        } else if (priorityB.isChecked()) {
+            priorityName = priorityB.getText().toString();
+        } else if (priorityC.isChecked()) {
+            priorityName = priorityC.getText().toString();
+        } else if (priorityD.isChecked()) {
+            priorityName = priorityD.getText().toString();
         }
     }
 
@@ -341,10 +362,8 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
 
         // attaching data adapter to spinner
         tags.setAdapter(dataAdapter);
-        for (int i=0;i<tags.getCount();i++)
-        {
-            if(tags.getItemAtPosition(i).toString().equals(listName))
-            {
+        for (int i = 0; i < tags.getCount(); i++) {
+            if (tags.getItemAtPosition(i).toString().equals(listName)) {
                 tags.setSelection(i);
             }
         }
@@ -410,15 +429,14 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
                 !description.getText().equals("");
     }
 
-    private void scheduleNotification(Notification notification, Calendar cal,String interval) {
+    private void scheduleNotification(Notification notification, Calendar cal, String interval) {
 
         Intent notificationIntent = new Intent(getContext(), com.example.to_do.Notification.class);
         notificationIntent.putExtra(com.example.to_do.Notification.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(com.example.to_do.Notification.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         long timeBeforeNotification = 0;
-        switch (interval)
-        {
+        switch (interval) {
             case "5 minutes":
                 timeBeforeNotification = 5 * 60000;
                 break;
@@ -442,19 +460,18 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         }
 
         AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis() - timeBeforeNotification, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() - timeBeforeNotification, pendingIntent);
     }
 
     private Notification getNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder( getContext(), default_notification_channel_id ) ;
-        builder.setContentTitle(name.getText().toString()) ;
-        builder.setContentText(description.getText().toString()) ;
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), default_notification_channel_id);
+        builder.setContentTitle(name.getText().toString());
+        builder.setContentText(description.getText().toString());
         builder.setSmallIcon(R.drawable.logo);
-        builder.setAutoCancel(true) ;
+        builder.setAutoCancel(true);
         builder.setChannelId(NOTIFICATION_CHANNEL_ID);
-        return builder.build() ;
+        return builder.build();
     }
-
 
 
 }

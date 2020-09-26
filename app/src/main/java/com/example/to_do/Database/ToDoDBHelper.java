@@ -246,10 +246,10 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor fetchTask(String tname) {
+    public Cursor fetchTask(String tName) {
         toDoDatabase = getReadableDatabase();
-        String[] arg = {tname};
-        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_Task where name_of_task like ?", arg);
+        String[] arg = {tName};
+        Cursor cur = toDoDatabase.rawQuery("Select * from To_do_Task where name_of_task Like '%" + tName + "%'", null);
         if (cur != null) {
             cur.moveToFirst();
         }

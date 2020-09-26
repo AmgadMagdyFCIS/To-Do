@@ -92,6 +92,7 @@ public class TasksFragment extends Fragment implements Click {
     public void onClick(int pos) {
         TaskItem taskItem=recyclerViewItems.get(pos);
         dbHelper.FinishTask(taskItem.getName());
+        dbHelper.decrease(list);
         recyclerViewItems.remove(pos);
         recyclerViewAdapter.notifyDataSetChanged();
         getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();

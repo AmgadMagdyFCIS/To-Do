@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.to_do.R;
 import com.example.to_do.UI.fragments.AddListFragment;
 import com.example.to_do.UI.fragments.MainFragment;
+import com.example.to_do.UI.fragments.SearchFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.home:
                 navigate(new MainFragment());
+                isFragmentOpen = true;
+                break;
+            case R.id.app_bar_search:
+                navigate(new SearchFragment());
                 isFragmentOpen = true;
                 break;
 
