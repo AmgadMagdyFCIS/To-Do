@@ -75,7 +75,7 @@ public class DoneFragment extends Fragment implements Click {
 
 
         //recycler view adapter
-        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),1,recyclerViewItems,this);
+        recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),2,recyclerViewItems,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(recyclerViewAdapter);

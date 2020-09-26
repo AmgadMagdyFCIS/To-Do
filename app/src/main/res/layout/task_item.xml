@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="@color/yellow"
+                android:background="#fff"
                 app:srcCompat="@drawable/ic_baseline_check_box_outline_blank_24"
                 tools:ignore="VectorDrawableCompat" />
 

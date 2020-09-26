@@ -57,6 +57,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.listName.setText(recyclerViewListItem.getName());
             holder.numberOfTasks.setText(String.valueOf(recyclerViewListItem.getNumberOfTasks()));
         } else {
+            if(type==2)
+            {
+                holder.done.setImageResource(R.drawable.ic_baseline_check_box_24);
+
+
+            }
             TaskItem recyclerViewTaskItem = tasksList.get(position);
             holder.taskName.setText(recyclerViewTaskItem.getName());
 
