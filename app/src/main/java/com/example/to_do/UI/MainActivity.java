@@ -3,6 +3,7 @@ package com.example.to_do.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     boolean isFragmentOpen = false;
     ActionBarDrawerToggle toggle;
     private DrawerLayout drawer;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +74,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        if (isFragmentOpen == true) {
+            isFragmentOpen = false;
             navigate(new MainFragment());
 
+            return;
+        } else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                this.finishAffinity();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
         }
     }
 
