@@ -78,8 +78,8 @@ public class ListFragment extends Fragment {
         taskslist = new ArrayList<>();
         doneList = new ArrayList<>();
         dbHelper = new ToDoDBHelper(getActivity());
-        taskslist = dbHelper.ReturnTasksOfSpecificList(list, 0);
-        doneList = dbHelper.ReturnTasksOfSpecificList(list, 1);
+        taskslist = dbHelper.returnTasksOfSpecificList(list, 0);
+        doneList = dbHelper.returnTasksOfSpecificList(list, 1);
 
         viewPager = view.findViewById(R.id.viewPager);
         viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getViewPagerItems());

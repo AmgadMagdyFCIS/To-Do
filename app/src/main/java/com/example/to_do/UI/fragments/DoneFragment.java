@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.to_do.Database.TaskItem;
 import com.example.to_do.Database.ToDoDBHelper;
@@ -70,7 +71,7 @@ public class DoneFragment extends Fragment implements Click {
 
         //db
         dbHelper= new ToDoDBHelper(getActivity());
-        recyclerViewItems=dbHelper.ReturnTasksOfSpecificList(list,1);
+        recyclerViewItems=dbHelper.returnTasksOfSpecificList(list,1);
 
 
 
@@ -84,13 +85,25 @@ public class DoneFragment extends Fragment implements Click {
 
     @Override
     public void onRecyclerViewClick(int pos) {
+        TaskItem taskItem=recyclerViewItems.get(pos);
+        Toast.makeText(getActivity(),taskItem.getName(),Toast.LENGTH_SHORT).show();
+        getFragmentManager().beginTransaction().replace(R.id.container, AddTaskFragment.newInstance(taskItem.getName(),list)).commit();
+    }
 
+    @Override
+    public void onDeleteButtonClick(int pos) {
+        TaskItem taskItem=recyclerViewItems.get(pos);
+        dbHelper.deleteTask(taskItem.getName());
+        recyclerViewItems.remove(pos);
+        recyclerViewAdapter.notifyDataSetChanged();
+        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
     }
 
     @Override
     public void onClick(int pos) {
         TaskItem taskItem=recyclerViewItems.get(pos);
         dbHelper.FinishTask(taskItem.getName());
+        taskItem.setDone(0);
         dbHelper.increase(list);
         recyclerViewItems.remove(pos);
         recyclerViewAdapter.notifyDataSetChanged();

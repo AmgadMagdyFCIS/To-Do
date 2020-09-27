@@ -33,6 +33,15 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
 
+            <ImageButton
+                android:id="@+id/deleteTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                tools:ignore="VectorDrawableCompat"
+                android:background="#ffffff"
+                android:layout_gravity="center_vertical"/>
+
 
         </LinearLayout>
 

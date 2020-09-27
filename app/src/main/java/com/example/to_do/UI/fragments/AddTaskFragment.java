@@ -106,7 +106,7 @@ public class AddTaskFragment extends Fragment implements View.OnClickListener, A
         Cursor curs = database.fetchTask(taskName);
         if (curs != null) {
             while (!curs.isAfterLast()) {
-                oldTaskItem = new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6));
+                oldTaskItem = new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6),curs.getInt(7));
                 curs.moveToNext();
             }
         }

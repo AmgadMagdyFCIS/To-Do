@@ -52,8 +52,6 @@ public class SearchFragment extends Fragment implements Click {
         recyclerViewItems = new ArrayList<>();
 
 
-
-
         //recycler view adapter
         recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), 1, recyclerViewItems, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -76,7 +74,7 @@ public class SearchFragment extends Fragment implements Click {
         if (curs != null) {
             recyclerViewItems.clear();
             while (!curs.isAfterLast()) {
-                recyclerViewItems.add(new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6)));
+                recyclerViewItems.add(new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6),curs.getInt(7)));
                 curs.moveToNext();
             }
         }
@@ -92,11 +90,23 @@ public class SearchFragment extends Fragment implements Click {
     }
 
     @Override
+    public void onDeleteButtonClick(int pos) {
+        TaskItem taskItem = recyclerViewItems.get(pos);
+        dbHelper.deleteTask(taskItem.getName());
+        recyclerViewItems.remove(pos);
+        recyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onClick(int pos) {
         TaskItem taskItem = recyclerViewItems.get(pos);
         dbHelper.FinishTask(taskItem.getName());
+        if (taskItem.getDone() == 0)
+            taskItem.setDone(1);
+        else
+            taskItem.setDone(0);
         recyclerViewItems.remove(pos);
         recyclerViewAdapter.notifyDataSetChanged();
-        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(taskItem.getListName())).commit();
+
     }
 }

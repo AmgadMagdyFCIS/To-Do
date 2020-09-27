@@ -170,7 +170,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void DeleteTask(String name) {
+    public void deleteTask(String name) {
         toDoDatabase = getWritableDatabase();
         Cursor cur = fetchTask(name);
         decrease(cur.getString(1));
@@ -195,7 +195,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         toDoDatabase.delete("To_do_List", "name_of_list='" + name + "'", null);
     }
 
-    public ArrayList<TaskItem> ReturnTasksOfSpecificList(String NameList, int done) {
+    public ArrayList<TaskItem> returnTasksOfSpecificList(String NameList, int done) {
         ArrayList<TaskItem> List = new ArrayList<>();
         toDoDatabase = getReadableDatabase();
 
@@ -203,7 +203,7 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         Cursor curs = fetchAllTasks();
         while (!curs.isAfterLast()) {
             if (curs.getString(1).equalsIgnoreCase(NameList) && curs.getInt(7) == done) {
-                List.add(new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6)));
+                List.add(new TaskItem(curs.getString(0), curs.getString(1), curs.getString(2), curs.getString(3), curs.getString(4), curs.getString(5), curs.getString(6),curs.getInt(7)));
             }
             curs.moveToNext();
         }

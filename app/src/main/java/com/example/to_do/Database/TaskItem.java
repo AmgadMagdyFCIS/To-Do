@@ -6,7 +6,7 @@ public class TaskItem {
 
     private  int done=0;
 
-    public TaskItem(String name, String listName, String date, String time, String priority, String description, String reminder) {
+    public TaskItem(String name, String listName, String date, String time, String priority, String description, String reminder,int done) {
         this.name = name;
         this.listName = listName;
         this.date = date;
@@ -29,6 +29,7 @@ public class TaskItem {
         }
         this.description = description;
         this.reminder = reminder;
+        this.done=done;
 
     }
 

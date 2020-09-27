@@ -86,6 +86,11 @@ public class MainFragment extends Fragment implements Click {
     }
 
     @Override
+    public void onDeleteButtonClick(int pos) {
+
+    }
+
+    @Override
     public void onClick(int pos) {
 
     }

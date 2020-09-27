@@ -68,7 +68,7 @@ public class TasksFragment extends Fragment implements Click {
 
         //db
         dbHelper= new ToDoDBHelper(getActivity());
-        recyclerViewItems=dbHelper.ReturnTasksOfSpecificList(list,0);
+        recyclerViewItems=dbHelper.returnTasksOfSpecificList(list,0);
 
 
 
@@ -89,9 +89,19 @@ public class TasksFragment extends Fragment implements Click {
     }
 
     @Override
+    public void onDeleteButtonClick(int pos) {
+        TaskItem taskItem=recyclerViewItems.get(pos);
+        dbHelper.deleteTask(taskItem.getName());
+        recyclerViewItems.remove(pos);
+        recyclerViewAdapter.notifyDataSetChanged();
+        getFragmentManager().beginTransaction().replace(R.id.container, ListFragment.newInstance(list)).commit();
+    }
+
+    @Override
     public void onClick(int pos) {
         TaskItem taskItem=recyclerViewItems.get(pos);
         dbHelper.FinishTask(taskItem.getName());
+        taskItem.setDone(1);
         dbHelper.decrease(list);
         recyclerViewItems.remove(pos);
         recyclerViewAdapter.notifyDataSetChanged();

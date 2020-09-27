@@ -57,13 +57,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.listName.setText(recyclerViewListItem.getName());
             holder.numberOfTasks.setText(String.valueOf(recyclerViewListItem.getNumberOfTasks()));
         } else {
-            if(type==2)
+            TaskItem recyclerViewTaskItem = tasksList.get(position);
+
+            if(recyclerViewTaskItem.getDone().equals(1))
             {
                 holder.done.setImageResource(R.drawable.ic_baseline_check_box_24);
-
-
             }
-            TaskItem recyclerViewTaskItem = tasksList.get(position);
+            else
+            {
+                holder.done.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
+            }
+
             holder.taskName.setText(recyclerViewTaskItem.getName());
 
         }
@@ -81,7 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView listName, numberOfTasks;
-        ImageButton done;
+        ImageButton done, delete;
         TextView taskName;
 
 
@@ -105,6 +109,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             } else {
                 taskName = itemView.findViewById(R.id.taskName);
                 done = itemView.findViewById(R.id.doneTask);
+
+                delete = itemView.findViewById(R.id.deleteTask);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (getAdapterPosition() != -1) {
+
+                            click.onDeleteButtonClick(getAdapterPosition());
+
+                        }
+                    }
+                });
+
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -119,7 +136,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     @Override
                     public void onClick(View view) {
                         if (getAdapterPosition() != -1) {
-                            done.setBackgroundResource(R.drawable.ic_baseline_check_box_24);
                             click.onClick(getAdapterPosition());
 
                         }
