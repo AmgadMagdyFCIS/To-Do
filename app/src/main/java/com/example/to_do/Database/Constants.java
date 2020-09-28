@@ -28,6 +28,8 @@ public class Constants {
         public static final String PASSWORD = "password";
     }
 
+//Abdoooooo Whyyyyyy
+
     public static class ListTable {
         public static final String TABLE_NAME = "Lists";
         public static final String NAME = "name";
